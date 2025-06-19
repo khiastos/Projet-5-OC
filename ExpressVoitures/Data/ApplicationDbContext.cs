@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ExpressVoitures.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Projet_5.Data;
@@ -12,8 +13,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Admin> Admin { get; set; }
     public DbSet<CarToRepair> CarToRepairs { get; set; }
     public DbSet<CarToSells> CarToSells { get; set; }
-    public DbSet<Customer> Customers { get; set; }
-    public DbSet<Expenses> Expenses { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

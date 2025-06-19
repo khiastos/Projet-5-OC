@@ -1,6 +1,8 @@
+using ExpressVoitures.Models.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Projet_5.Data;
+using Projet_5.Models.Repositories.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,18 +14,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICarToSellsRepository, CarToSellsRepository>();
+builder.Services.AddScoped<ICarToRepairRepository, CarToRepairRepository>();
 
 var app = builder.Build();
-
-app.MapGet("/add-customer", async (ApplicationDbContext _context) =>
-{
-    var customer = new Customer { Name = "beau gosse", Mail = "salut" };
-    _context.Customers.Add(customer);
-    await _context.SaveChangesAsync();
-});
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

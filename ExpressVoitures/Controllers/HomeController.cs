@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Projet_5.Models;
+using Projet_5.Models.ViewModels;
 
 namespace Projet_5.Controllers;
 
