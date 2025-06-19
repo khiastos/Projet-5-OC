@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Projet_5.Data;
 
-namespace ExpressVoitures.Models.Repositories
-{
  public class CarToSellsRepository : ICarToSellsRepository
     {
         private readonly ApplicationDbContext _context;
@@ -52,4 +50,3 @@ namespace ExpressVoitures.Models.Repositories
             }
         }
     }
-}

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ExpressVoitures.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Projet_5.Data;
 using Projet_5.Models.Repositories.Interfaces;
 
@@ -14,6 +15,10 @@ public class CarToRepairRepository : ICarToRepairRepository
     public async Task<List<CarToRepair>> GetAll()
     {
         return await _context.CarToRepairs.ToListAsync();
+    }
+    public async Task<CarToRepair> GetById(int id)
+    {
+        return await _context.CarToRepairs.FindAsync(id);
     }
 
     public async Task Add(CarToRepair car)
