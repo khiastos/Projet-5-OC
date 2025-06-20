@@ -17,5 +17,6 @@ public class CarToRepair
     [Range(0.01, int.MaxValue, ErrorMessage = "Le prix des réparations doit être supérieur à 0")]
     public int RepairCost { get; set; }
     public string? Repair { get; set; }
+
 }
 

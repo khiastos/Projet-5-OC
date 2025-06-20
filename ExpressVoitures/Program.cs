@@ -16,7 +16,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ICarToSellsRepository, CarToSellsRepository>();
+builder.Services.AddScoped<ICarToSellRepository, CarToSellRepository>();
 builder.Services.AddScoped<ICarToRepairRepository, CarToRepairRepository>();
 
 var app = builder.Build();

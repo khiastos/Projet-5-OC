@@ -1,6 +1,6 @@
 ﻿using ExpressVoitures.Models.Entities;
 
-public interface ICarToSellsRepository
+public interface ICarToSellRepository
 {
     Task<List<CarToSells>> GetAll();
     Task<CarToSells> GetById(int id);

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 public class CarToSellsController : Controller
 {
-    private readonly ICarToSellsRepository _repo;
+    private readonly ICarToSellRepository _repo;
 
-    public CarToSellsController(ICarToSellsRepository repo)
+    public CarToSellsController(ICarToSellRepository repo)
     {
         _repo = repo;
     }

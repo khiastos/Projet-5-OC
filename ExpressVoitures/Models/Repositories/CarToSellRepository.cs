@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Projet_5.Data;
 
- public class CarToSellsRepository : ICarToSellsRepository
+ public class CarToSellRepository : ICarToSellRepository
     {
         private readonly ApplicationDbContext _context;
-        public CarToSellsRepository(ApplicationDbContext context)
+        public CarToSellRepository(ApplicationDbContext context)
         {
             _context = context;
         }
