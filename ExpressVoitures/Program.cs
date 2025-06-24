@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Projet_5.Data;
-using Projet_5.Models.Repositories.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +15,6 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ICarToSellRepository, CarToSellRepository>();
-builder.Services.AddScoped<ICarToRepairRepository, CarToRepairRepository>();
 
 var app = builder.Build();
 

@@ -1,6 +1,7 @@
 ﻿using ExpressVoitures.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Projet_5.Models.Entities;
 
 namespace Projet_5.Data;
 
@@ -10,9 +11,13 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options)
     {
     }
-    public DbSet<Admin> Admin { get; set; }
-    public DbSet<CarToRepair> CarToRepairs { get; set; }
-    public DbSet<CarToSells> CarToSells { get; set; }
+    public DbSet<Car> Car { get; set; }
+    public DbSet<Brand> Brand { get; set; }
+    public DbSet<Image> Image { get; set; }
+    public DbSet<Model> Model { get; set; }
+    public DbSet<Repair> Repair { get; set; }
+    public DbSet<User> User { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

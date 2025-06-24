@@ -4,8 +4,8 @@ namespace Projet_5.Models.Services.Interfaces
 {
     public interface ICartService
     {
-        void AddItem(CarToSells car);
-        void RemoveLine(CarToSells car);
+        void AddItem(Car car);
+        void RemoveLine(Car car);
         void Clear();
         double GetTotalValue();
 
