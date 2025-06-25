@@ -2,7 +2,7 @@
 
 namespace Projet_5.Models.Entities
 {
-    public class Image
+    public class CarImage
     {
         public int Id { get; set; }
 
