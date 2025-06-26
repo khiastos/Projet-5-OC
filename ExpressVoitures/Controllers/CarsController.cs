@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ExpressVoitures.Models.Entities;
 using Projet_5.Data;
 using Microsoft.AspNetCore.Authorization;
+using Projet_5.Models.Entities;
 
 namespace Projet_5.Controllers
 {
@@ -18,6 +19,10 @@ namespace Projet_5.Controllers
         // GET: Cars
         public async Task<IActionResult> Index()
         {
+            var cars = _context.Car
+    .Include(c => c.brand)
+    .Include(c => c.model)
+    .ToList();
             return View(await _context.Car.ToListAsync());
         }
 
@@ -43,6 +48,8 @@ namespace Projet_5.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            ViewBag.Brands = _context.Brand.ToList();
+            ViewBag.Models = _context.Model.ToList();
             return View();
         }
 
@@ -50,16 +57,42 @@ namespace Projet_5.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("SellingPrice,PurchasePrice,Description,Year,IsAvailable,PurchasedAt,ReleasedAt,SoldAt,Finish")] Car car)
+
+        public async Task<IActionResult> Create([Bind("SellingPrice,Year,Finish,BrandId,ModelId")] Car car)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(car);
+                car.brand = await _context.Brand.FindAsync(car.BrandId);
+                car.model = await _context.Model.FindAsync(car.ModelId);
+
+                //if (carImageFile != null && carImageFile.Length > 0)
+                //{
+                //    using var ms = new MemoryStream();
+                //    await carImageFile.CopyToAsync(ms);
+                //    var imageBytes = ms.ToArray();
+
+                //    car.CarImage = new CarImage { ImageData = imageBytes };
+                //}
+
+                _context.Car.Add(car);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Brands = _context.Brand.ToList();
+            ViewBag.Models = _context.Model.ToList();
             return View(car);
         }
+        //public IActionResult GetImage(int id)
+        //{
+        //    var car = _context.Car
+        //        .Include(c => c.CarImage)
+        //        .FirstOrDefault(c => c.ID == id);
+
+        //    if (car?.CarImage?.ImageData == null)
+        //        return NotFound();
+
+        //    return File(car.CarImage.ImageData, car.CarImage.ContentType ?? "image/jpeg");
+        //}
 
         // GET: Cars/Edit/5
         [Authorize(Roles = "Admin")]
@@ -70,11 +103,17 @@ namespace Projet_5.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Car.FindAsync(id);
+            var car = await _context.Car
+       .Include(c => c.brand)
+       .Include(c => c.model)
+       .FirstOrDefaultAsync(c => c.ID == id);
+
             if (car == null)
             {
                 return NotFound();
             }
+            ViewBag.Brands = _context.Brand.ToList();
+            ViewBag.Models = _context.Model.ToList();
             return View(car);
         }
 
@@ -82,12 +121,9 @@ namespace Projet_5.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,SellingPrice,PurchasePrice,Description,Year,IsAvailable,PurchasedAt,ReleasedAt,SoldAt,Finish")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,SellingPrice,Year,Finish,BrandId,ModelId,IsAvailable")] Car car)
         {
-            if (id != car.ID)
-            {
-                return NotFound();
-            }
+            if (id != car.ID) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -98,19 +134,17 @@ namespace Projet_5.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CarExists(car.ID))
-                    {
+                    if (!_context.Car.Any(e => e.ID == car.ID))
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Brands = _context.Brand.ToList();
+            ViewBag.Models = _context.Model.ToList();
             return View(car);
         }
+
 
         // GET: Cars/Delete/5
         [Authorize(Roles = "Admin")]

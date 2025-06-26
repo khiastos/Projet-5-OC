@@ -10,6 +10,6 @@ namespace Projet_5.Models.Entities
         public int Cost { get; set; }
 
         [Required(ErrorMessage = "La descriptions des réparations effectuées est obligatoire")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

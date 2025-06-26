@@ -30,7 +30,7 @@ namespace Projet_5.Controllers
             }
 
             var brand = await _context.Brand
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (brand == null)
             {
                 return NotFound();
@@ -84,7 +84,7 @@ namespace Projet_5.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Brand brand)
         {
-            if (id != brand.ID)
+            if (id != brand.Id)
             {
                 return NotFound();
             }
@@ -98,7 +98,7 @@ namespace Projet_5.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BrandExists(brand.ID))
+                    if (!BrandExists(brand.Id))
                     {
                         return NotFound();
                     }
@@ -122,7 +122,7 @@ namespace Projet_5.Controllers
             }
 
             var brand = await _context.Brand
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (brand == null)
             {
                 return NotFound();
@@ -149,7 +149,7 @@ namespace Projet_5.Controllers
 
         private bool BrandExists(int id)
         {
-            return _context.Brand.Any(e => e.ID == id);
+            return _context.Brand.Any(e => e.Id == id);
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projet_5.Data;
 
@@ -11,9 +12,11 @@ using Projet_5.Data;
 namespace Projet_5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250626143321_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +33,11 @@ namespace Projet_5.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CarImageId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Finish")
                         .IsRequired()
@@ -41,25 +46,20 @@ namespace Projet_5.Migrations
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<double>("PurchasePrice")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("PurchasedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ReleasedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ModelId")
+                        .HasColumnType("int");
 
                     b.Property<double>("SellingPrice")
                         .HasColumnType("float");
-
-                    b.Property<DateTime>("SoldAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("ModelId");
 
                     b.ToTable("Car");
                 });
@@ -268,22 +268,22 @@ namespace Projet_5.Migrations
 
             modelBuilder.Entity("Projet_5.Models.Entities.Brand", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Brand");
                 });
 
-            modelBuilder.Entity("Projet_5.Models.Entities.Image", b =>
+            modelBuilder.Entity("Projet_5.Models.Entities.CarImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -291,18 +291,18 @@ namespace Projet_5.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
+                    b.Property<string>("ContentType")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Image");
+                    b.ToTable("CarImage");
                 });
 
             modelBuilder.Entity("Projet_5.Models.Entities.Model", b =>
@@ -342,25 +342,23 @@ namespace Projet_5.Migrations
                     b.ToTable("Repair");
                 });
 
-            modelBuilder.Entity("Projet_5.Models.Entities.User", b =>
+            modelBuilder.Entity("ExpressVoitures.Models.Entities.Car", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Projet_5.Models.Entities.Brand", "brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.HasOne("Projet_5.Models.Entities.Model", "model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Navigation("brand");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
+                    b.Navigation("model");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
