@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ExpressVoitures.Models.Entities;
 using Projet_5.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Projet_5.Controllers
 {
@@ -39,6 +40,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Cars/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -47,6 +49,7 @@ namespace Projet_5.Controllers
         // POST: Cars/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("SellingPrice,PurchasePrice,Description,Year,IsAvailable,PurchasedAt,ReleasedAt,SoldAt,Finish")] Car car)
         {
             if (ModelState.IsValid)
@@ -59,6 +62,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Cars/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,6 +81,7 @@ namespace Projet_5.Controllers
         // POST: Cars/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,SellingPrice,PurchasePrice,Description,Year,IsAvailable,PurchasedAt,ReleasedAt,SoldAt,Finish")] Car car)
         {
             if (id != car.ID)
@@ -108,6 +113,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Cars/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,6 +134,7 @@ namespace Projet_5.Controllers
         // POST: Cars/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var car = await _context.Car.FindAsync(id);

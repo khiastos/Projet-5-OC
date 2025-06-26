@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Projet_5.Data;
 using Projet_5.Models.Entities;
@@ -39,6 +40,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Repairs/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -47,6 +49,7 @@ namespace Projet_5.Controllers
         // POST: Repairs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Cost,Description")] Repair repair)
         {
             if (ModelState.IsValid)
@@ -59,6 +62,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Repairs/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,6 +81,7 @@ namespace Projet_5.Controllers
         // POST: Repairs/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Cost,Description")] Repair repair)
         {
             if (id != repair.Id)
@@ -108,6 +113,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Repairs/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,6 +134,7 @@ namespace Projet_5.Controllers
         // POST: Repairs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var repair = await _context.Repair.FindAsync(id);
