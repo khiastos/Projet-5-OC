@@ -1,42 +1,57 @@
 ﻿@model ExpressVoitures.Models.Entities.Car
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Détails</h1>
 
 <div>
-    <h4>Car</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SellingPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SellingPrice)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsAvailable)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsAvailable)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Finish)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Finish)
-        </dd>
-    </dl>
+	@if (!string.IsNullOrEmpty(Model.ImageUrl))
+	{
+		<img src="@Model.ImageUrl" alt="Photo" width="250" style="object-fit:contain;max-height:180px;margin-bottom:20px;" />
+	}
+	else
+	{
+		<span>Pas d'image</span>
+	}
+</div>
+
+<div>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.SellingPrice)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.SellingPrice)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Year)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Year)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.IsAvailable)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.IsAvailable)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Finish)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Finish)
+		</dd>
+	</dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+	@if (User.IsInRole("Admin"))
+	{
+		<a asp-action="Edit" asp-route-id="@Model.ID">Modifier</a>
+		<a asp-action="Delete" asp-route-id="@Model.ID">Supprimer</a>
+	}
+	<a asp-action="Index">Retour</a>
 </div>
+

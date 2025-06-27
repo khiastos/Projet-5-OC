@@ -4,52 +4,51 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Nos voitures</h1>
 
 <p>
-	<a asp-action="Create">Create New</a>
+	<a asp-action="Create">+ Ajouter une voiture</a>
 </p>
 <table class="table">
 	<thead>
 		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.SellingPrice)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Year)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.IsAvailable)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Finish)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.model)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.brand)
-			</th>
+			<th>Image</th>
+			<th>@Html.DisplayNameFor(model => model.SellingPrice)</th>
+			<th>@Html.DisplayNameFor(model => model.Year)</th>
+			<th>@Html.DisplayNameFor(model => model.IsAvailable)</th>
+			<th>@Html.DisplayNameFor(model => model.Finish)</th>
+			<th>@Html.DisplayNameFor(model => model.model)</th>
+			<th>@Html.DisplayNameFor(model => model.brand)</th>
 			<th></th>
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>@item.SellingPrice</td>
-				<td>@item.Year</td>
-				<td>@item.IsAvailable</td>
-				<td>@item.Finish</td>
-				<td>@item.model?.Name</td>
-				<td>@item.brand?.Name</td>
-				<td>
-					@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-					@Html.ActionLink("Details", "Details", new { id = item.ID }) |
-					@Html.ActionLink("Delete", "Delete", new { id = item.ID })
-				</td>
-			</tr>
-		}
+    <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                        <a asp-action="Details" asp-route-id="@item.ID">
+                            <img src="@item.ImageUrl" alt="Photo" width="150" style="object-fit:contain;max-height:100px;" />
+                        </a>
+                        }
+                        else
+                        {
+                        <span>Pas d'image</span>
+                        }
+                </td>
+                <td>@item.SellingPrice</td>
+                <td>@item.Year</td>
+                <td>@item.IsAvailable</td>
+                <td>@item.Finish</td>
+                <td>@item.model?.Name</td>
+                <td>@item.brand?.Name</td>
+                <td>
+                </td>
+            </tr>
+            }
+    </tbody>
 
-	</tbody>
 </table>

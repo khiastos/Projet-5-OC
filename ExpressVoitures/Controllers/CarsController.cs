@@ -26,6 +26,7 @@ namespace Projet_5.Controllers
             return View(await _context.Car.ToListAsync());
         }
 
+
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -55,47 +56,45 @@ namespace Projet_5.Controllers
 
         // POST: Cars/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-
-        public async Task<IActionResult> Create([Bind("SellingPrice,Year,Finish,BrandId,ModelId")] Car car)
+        public async Task<IActionResult> Create(Car car, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
-                car.brand = await _context.Brand.FindAsync(car.BrandId);
-                car.model = await _context.Model.FindAsync(car.ModelId);
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    // Crée le dossier si nécessaire
+                    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/cars");
+                    if (!Directory.Exists(uploadPath))
+                    {
+                        Directory.CreateDirectory(uploadPath);
+                    }
 
-                //if (carImageFile != null && carImageFile.Length > 0)
-                //{
-                //    using var ms = new MemoryStream();
-                //    await carImageFile.CopyToAsync(ms);
-                //    var imageBytes = ms.ToArray();
+                    // Crée un nom de fichier unique
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine(uploadPath, fileName);
 
-                //    car.CarImage = new CarImage { ImageData = imageBytes };
-                //}
+                    // Sauvegarde le fichier
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
 
-                _context.Car.Add(car);
+                    // Enregistre le chemin relatif (pour affichage dans le site)
+                    car.ImageUrl = "/images/cars/" + fileName;
+                }
+
+                _context.Add(car);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Brands = _context.Brand.ToList();
-            ViewBag.Models = _context.Model.ToList();
+
             return View(car);
         }
-        //public IActionResult GetImage(int id)
-        //{
-        //    var car = _context.Car
-        //        .Include(c => c.CarImage)
-        //        .FirstOrDefault(c => c.ID == id);
 
-        //    if (car?.CarImage?.ImageData == null)
-        //        return NotFound();
 
-        //    return File(car.CarImage.ImageData, car.CarImage.ContentType ?? "image/jpeg");
-        //}
 
-        // GET: Cars/Edit/5
-        [Authorize(Roles = "Admin")]
+            // GET: Cars/Edit/5
+            [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -121,29 +120,40 @@ namespace Projet_5.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,SellingPrice,Year,Finish,BrandId,ModelId,IsAvailable")] Car car)
+        public async Task<IActionResult> Edit(int id, Car car, IFormFile imageFile)
         {
-            if (id != car.ID) return NotFound();
+            if (id != car.ID)
+                return NotFound();
 
-            if (ModelState.IsValid)
+            var carInDb = await _context.Car.FindAsync(id);
+            if (carInDb == null)
+                return NotFound();
+
+            carInDb.SellingPrice = car.SellingPrice;
+            carInDb.Year = car.Year;
+            carInDb.IsAvailable = car.IsAvailable;
+            carInDb.Finish = car.Finish;
+            carInDb.BrandId = car.BrandId;
+            carInDb.ModelId = car.ModelId;
+
+            if (imageFile != null && imageFile.Length > 0)
             {
-                try
+                var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                Directory.CreateDirectory(uploads);
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine(uploads, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    _context.Update(car);
-                    await _context.SaveChangesAsync();
+                    await imageFile.CopyToAsync(stream);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Car.Any(e => e.ID == car.ID))
-                        return NotFound();
-                    else throw;
-                }
-                return RedirectToAction(nameof(Index));
+                carInDb.ImageUrl = "/images/" + fileName;
             }
-            ViewBag.Brands = _context.Brand.ToList();
-            ViewBag.Models = _context.Model.ToList();
-            return View(car);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
+
 
 
         // GET: Cars/Delete/5

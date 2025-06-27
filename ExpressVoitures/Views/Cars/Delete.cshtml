@@ -1,14 +1,24 @@
 ﻿@model ExpressVoitures.Models.Entities.Car
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Supprimer";
 }
 
-<h1>Delete</h1>
+<h1>Supprimer</h1>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Car</h4>
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <img src="@Model.ImageUrl" alt="Photo" width="250" style="object-fit:contain;max-height:180px;margin-bottom:20px;" />
+    }
+    else
+    {
+        <span>Pas d'image</span>
+    }
+</div>
+
+<h3>Voulez-vous vraiment supprimer : <strong>@Model.Finish</strong> ?</h3>
+<div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -37,9 +47,9 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Supprimer">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Confirmer la suppression" class="btn btn-danger" /> |
+        <a asp-action="Index">Retour</a>
     </form>
 </div>

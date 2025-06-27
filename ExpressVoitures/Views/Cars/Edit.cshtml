@@ -4,13 +4,12 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Vous êtes en train de modifier : <strong>@Model.Finish</strong> </h1>
 
-<h4>Car</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
@@ -34,23 +33,27 @@
                 <span asp-validation-for="Finish" class="text-danger"></span>
             </div>
             <div>
-                <label asp-for="BrandId"></label>
-                <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name", Model.BrandId))" class="form-control"></select>
+                <label asp-for="brand"></label>
+                <select asp-for="brand" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name", Model.BrandId))" class="form-control"></select>
             </div>
             <div>
-                <label asp-for="ModelId"></label>
-                <select asp-for="ModelId" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name", Model.ModelId))" class="form-control"></select>
+                <label asp-for="model"></label>
+                <select asp-for="model" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name", Model.ModelId))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="imageFile">Changer l'image</label>
+                <input type="file" name="imageFile" class="form-control" />
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Valider les changements" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Retour</a>
 </div>
 
 @section Scripts {

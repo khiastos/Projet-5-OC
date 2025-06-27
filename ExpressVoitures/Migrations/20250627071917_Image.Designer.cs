@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projet_5.Data;
 
@@ -11,9 +12,11 @@ using Projet_5.Data;
 namespace Projet_5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250627071917_Image")]
+    partial class Image
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,11 +36,11 @@ namespace Projet_5.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CarImageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Finish")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
@@ -55,6 +58,8 @@ namespace Projet_5.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("BrandId");
+
+                    b.HasIndex("CarImageId");
 
                     b.HasIndex("ModelId");
 
@@ -344,11 +349,17 @@ namespace Projet_5.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Projet_5.Models.Entities.CarImage", "CarImage")
+                        .WithMany()
+                        .HasForeignKey("CarImageId");
+
                     b.HasOne("Projet_5.Models.Entities.Model", "model")
                         .WithMany()
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CarImage");
 
                     b.Navigation("brand");
 

@@ -1,16 +1,19 @@
 ﻿@model ExpressVoitures.Models.Entities.Car
 
 @{
-	ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Ajouter une voiture</h1>
 
-<h4>Car</h4>
+<h4>Tous les champs sont obligatoires</h4>
 <hr />
 <div class="row">
-	<div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div>
                 <label asp-for="SellingPrice"></label>
                 <input asp-for="SellingPrice" class="form-control" />
@@ -20,32 +23,28 @@
                 <input asp-for="Year" class="form-control" />
             </div>
             <div>
-                <label asp-for="BrandId"></label>
-                <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name"))" class="form-control"></select>
+                <label asp-for="brand"></label>
+                <select asp-for="brand" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name"))" class="form-control"></select>
             </div>
             <div>
-                <label asp-for="ModelId"></label>
-                <select asp-for="ModelId" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name"))" class="form-control"></select>
+                <label asp-for="model"></label>
+                <select asp-for="model" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name"))" class="form-control"></select>
             </div>
             <div>
                 <label asp-for="Finish"></label>
                 <input asp-for="Finish" class="form-control" />
             </div>
-            @* <div>
-                <label for="carImageFile">Image</label>
-                <input type="file" name="carImageFile" class="form-control" />
-            </div> *@
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" type="file" class="form-control" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+
             <button type="submit">Créer</button>
         </form>
-	</div>
+    </div>
 </div>
 
 <div>
-	<a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Retour</a>
 </div>
-
-@section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
-}
