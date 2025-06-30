@@ -20,23 +20,25 @@ namespace Projet_5.Controllers
         public async Task<IActionResult> Index()
         {
             var cars = _context.Car
-    .Include(c => c.brand)
-    .Include(c => c.model)
+    .Include(c => c.Brand)
+    .Include(c => c.Model)
     .ToList();
             return View(await _context.Car.ToListAsync());
         }
 
-
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var car = await _context.Car
+       .Include(c => c.Brand)
+       .Include(c => c.Model)
+       .FirstOrDefaultAsync(c => c.ID == id);
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Car
-                .FirstOrDefaultAsync(m => m.ID == id);
             if (car == null)
             {
                 return NotFound();
@@ -91,8 +93,6 @@ namespace Projet_5.Controllers
             return View(car);
         }
 
-
-
             // GET: Cars/Edit/5
             [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
@@ -103,8 +103,8 @@ namespace Projet_5.Controllers
             }
 
             var car = await _context.Car
-       .Include(c => c.brand)
-       .Include(c => c.model)
+       .Include(c => c.Brand)
+       .Include(c => c.Model)
        .FirstOrDefaultAsync(c => c.ID == id);
 
             if (car == null)
@@ -160,13 +160,16 @@ namespace Projet_5.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
+            var car = await _context.Car
+      .Include(c => c.Brand)
+      .Include(c => c.Model)
+      .FirstOrDefaultAsync(c => c.ID == id);
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Car
-                .FirstOrDefaultAsync(m => m.ID == id);
             if (car == null)
             {
                 return NotFound();

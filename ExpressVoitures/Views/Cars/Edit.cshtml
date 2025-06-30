@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Vous êtes en train de modifier : <strong>@Model.Finish</strong> </h1>
+<h1>Vous êtes en train de modifier : <strong>@Model.Brand.Name @Model.Model.Name</strong> </h1>
 
 <hr />
 <div class="row">
@@ -33,12 +33,12 @@
                 <span asp-validation-for="Finish" class="text-danger"></span>
             </div>
             <div>
-                <label asp-for="brand"></label>
-                <select asp-for="brand" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name", Model.BrandId))" class="form-control"></select>
+                <label asp-for="BrandId"></label>
+                <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name", Model.BrandId))" class="form-control"></select>
             </div>
             <div>
-                <label asp-for="model"></label>
-                <select asp-for="model" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name", Model.ModelId))" class="form-control"></select>
+                <label asp-for="ModelId"></label>
+                <select asp-for="ModelId" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name", Model.ModelId))" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label for="imageFile">Changer l'image</label>

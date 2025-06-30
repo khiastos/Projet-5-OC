@@ -17,21 +17,24 @@ namespace ExpressVoitures.Models.Entities
 
         [Display(Name = "Année")]
         [Required(ErrorMessage = "L'année est obligatoire")]
-        [Range(1900, 1990, ErrorMessage = "Saississez une année entre 1900 et 1990")]
         public int Year { get; set; }
 
-        [Display(Name = "Disponibilité")]
+        [Display(Name = "Disponible à la vente")]
         public bool IsAvailable { get; set; } = true;
 
         [Display(Name = "Finition")]
         [Required(ErrorMessage = "Les finitions sont obligatoires")]
         public required string Finish { get; set; }
-        public int BrandId { get; set; }
+
         [Display(Name = "Marque")]
-        public Brand? brand { get; set; }
-        public int ModelId { get; set; }
+        public Brand? Brand { get; set; }
+        [Display(Name = "Marque")]
+        public int BrandId { get; set; }
         [Display(Name = "Modèle")]
-        public Model? model { get; set; }
+        public Model? Model { get; set; }
+
+        [Display(Name = "Modèle")]
+        public int ModelId { get; set; }
 
         [Display(Name = "Photo de la voiture")]
         [NotMapped] public IFormFile? ImageFile { get; set; }

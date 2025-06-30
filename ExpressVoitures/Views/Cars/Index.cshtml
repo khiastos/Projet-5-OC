@@ -7,7 +7,11 @@
 <h1>Nos voitures</h1>
 
 <p>
-	<a asp-action="Create">+ Ajouter une voiture</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create">+ Ajouter une voiture</a>
+    }
+	
 </p>
 <table class="table">
 	<thead>
@@ -17,8 +21,8 @@
 			<th>@Html.DisplayNameFor(model => model.Year)</th>
 			<th>@Html.DisplayNameFor(model => model.IsAvailable)</th>
 			<th>@Html.DisplayNameFor(model => model.Finish)</th>
-			<th>@Html.DisplayNameFor(model => model.model)</th>
-			<th>@Html.DisplayNameFor(model => model.brand)</th>
+			<th>@Html.DisplayNameFor(model => model.Model)</th>
+			<th>@Html.DisplayNameFor(model => model.Brand)</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -39,12 +43,14 @@
                         <span>Pas d'image</span>
                         }
                 </td>
-                <td>@item.SellingPrice</td>
+                <td>@item.SellingPrice €</td>
                 <td>@item.Year</td>
-                <td>@item.IsAvailable</td>
+                <td>
+                        @(item.IsAvailable ? "Disponible dès maintenant" : "Vendue")
+                </td>
                 <td>@item.Finish</td>
-                <td>@item.model?.Name</td>
-                <td>@item.brand?.Name</td>
+                <td>@item.Model?.Name</td>
+                <td>@item.Brand?.Name</td>
                 <td>
                 </td>
             </tr>
