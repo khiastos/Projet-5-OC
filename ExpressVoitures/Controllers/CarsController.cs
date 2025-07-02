@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ExpressVoitures.Models.Entities;
-using Projet_5.Data;
 using Projet_5.Models.Utils;
 using Microsoft.AspNetCore.Authorization;
 
@@ -10,45 +8,38 @@ namespace Projet_5.Controllers
 {
     public class CarsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICarRepository _carRepository;
+        private readonly IBrandRepository _brandRepository;
+        private readonly IModelRepository _modelRepository;
 
-        public CarsController(ApplicationDbContext context)
+        public CarsController(ICarRepository carRepository, IBrandRepository brandRepository, IModelRepository modelRepository)
         {
-            _context = context;
+            _carRepository = carRepository;
+            _brandRepository = brandRepository;
+            _modelRepository = modelRepository;
         }
 
         // GET: Cars
         public async Task<IActionResult> Index()
         {
-            var cars = _context.Car
-    .Include(c => c.Brand)
-    .Include(c => c.Model)
-    .ToList();
-            return View(await _context.Car.ToListAsync());
+            var cars = await _carRepository.GetAllAsync();
+            return View(cars);
         }
 
         // GET: Cars/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            var car = await _context.Car
-       .Include(c => c.Brand)
-       .Include(c => c.Model)
-       .FirstOrDefaultAsync(c => c.ID == id);
-
-            if (id is null || car is null)
-            {
-                return NotFound();
-            }
-
+            var car = await _carRepository.GetByIdAsync(id);
             return View(car);
         }
 
         // GET: Cars/Create
         [Authorize(Roles = "Admin")]
-        public IActionResult Create()
-        {
-            ViewBag.Brands = _context.Brand.ToList();
-            ViewBag.Models = _context.Model.ToList();
+        public async Task<IActionResult> Create()
+
+        {   // Récup les marques et modèles pour le dropdown de la view
+            ViewBag.Brands = await _brandRepository.GetAllAsync();
+            ViewBag.Models = await _modelRepository.GetAllAsync();
             return View();
         }
 
@@ -59,34 +50,24 @@ namespace Projet_5.Controllers
             if (ModelState.IsValid)
             {
                 await ImageUtils.AddAnImageAsync(car, imageFile, "cars", (c, url) => c.ImageUrl = url);
-                _context.Add(car);
-                await _context.SaveChangesAsync();
+                await _carRepository.AddAsync(car);
                 return RedirectToAction(nameof(Index));
             }
-
             return View(car);
         }
 
         // GET: Cars/Edit/5
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var car = await _context.Car
-       .Include(c => c.Brand)
-       .Include(c => c.Model)
-       .FirstOrDefaultAsync(c => c.ID == id);
+            var car = await _carRepository.GetByIdAsync(id);
 
             if (car == null)
-            {
                 return NotFound();
-            }
-            ViewBag.Brands = _context.Brand.ToList();
-            ViewBag.Models = _context.Model.ToList();
+
+            // Récup les marques et modèles pour le dropdown de la view
+            ViewBag.Brands = await _brandRepository.GetAllAsync();
+            ViewBag.Models = await _modelRepository.GetAllAsync();
             return View(car);
         }
 
@@ -96,7 +77,7 @@ namespace Projet_5.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, Car car, IFormFile imageFile)
         {
-            var carInDb = await _context.Car.FindAsync(id);
+            var carInDb = await _carRepository.GetByIdAsync(id);
             if (carInDb == null || id != car.ID)
                 return NotFound();
 
@@ -111,22 +92,17 @@ namespace Projet_5.Controllers
             // Gestion de l'image
             await ImageUtils.UpdateImageAsync(carInDb, imageFile, "cars", c => c.ImageUrl, (c, url) => c.ImageUrl = url);
 
-            await _context.SaveChangesAsync();
+            await _carRepository.UpdateAsync(carInDb);
             return RedirectToAction(nameof(Index));
         }
 
-
-
         // GET: Cars/Delete/5
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var car = await _context.Car
-                      .Include(c => c.Brand)
-                      .Include(c => c.Model)
-                      .FirstOrDefaultAsync(c => c.ID == id);
+            var car = await _carRepository.GetByIdAsync(id);
 
-            if (id is null || car is null)
+            if (car is null)
                 return NotFound();
 
             return View(car);
@@ -138,22 +114,15 @@ namespace Projet_5.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var car = await _context.Car.FindAsync(id);
+            var car = await _carRepository.GetByIdAsync(id);
 
             if (car != null)
             {
                 ImageUtils.DeleteImageAsync(car, c => c.ImageUrl);
-                _context.Car.Remove(car);
-                await _context.SaveChangesAsync();
+                await _carRepository.DeleteAsync(id);
             }
 
             return RedirectToAction(nameof(Index));
-        }
-
-
-        private bool CarExists(int id)
-        {
-            return _context.Car.Any(e => e.ID == id);
         }
     }
 }

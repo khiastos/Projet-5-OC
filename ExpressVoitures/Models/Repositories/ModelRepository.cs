@@ -11,14 +11,15 @@ public class ModelRepository : IModelRepository
         _context = context;
     }
 
+    public async Task<IEnumerable<Model>> GetAllAsync()
+    {
+        return await _context.Model
+            .ToListAsync();
+    }
     public async Task<Model?> GetByIdAsync(int id)
     {
-        return await _context.Model.FindAsync(id);
-    }
-
-    public async Task<List<Model>> GetAllAsync()
-    {
-        return await _context.Model.ToListAsync();
+        return await _context.Model
+            .FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task AddAsync(Model model)
@@ -29,7 +30,6 @@ public class ModelRepository : IModelRepository
 
     public async Task UpdateAsync(Model model)
     {
-        _context.Model.Update(model);
         await _context.SaveChangesAsync();
     }
 

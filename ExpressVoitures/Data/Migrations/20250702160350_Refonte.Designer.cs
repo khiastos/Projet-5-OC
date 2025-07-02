@@ -12,8 +12,8 @@ using Projet_5.Data;
 namespace Projet_5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250627082100_Image3")]
-    partial class Image3
+    [Migration("20250702160350_Refonte")]
+    partial class Refonte
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -283,25 +283,6 @@ namespace Projet_5.Migrations
                     b.ToTable("Brand");
                 });
 
-            modelBuilder.Entity("Projet_5.Models.Entities.CarImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ContentType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("ImageData")
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CarImage");
-                });
-
             modelBuilder.Entity("Projet_5.Models.Entities.Model", b =>
                 {
                     b.Property<int>("Id")
@@ -319,43 +300,23 @@ namespace Projet_5.Migrations
                     b.ToTable("Model");
                 });
 
-            modelBuilder.Entity("Projet_5.Models.Entities.Repair", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cost")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Repair");
-                });
-
             modelBuilder.Entity("ExpressVoitures.Models.Entities.Car", b =>
                 {
-                    b.HasOne("Projet_5.Models.Entities.Brand", "brand")
+                    b.HasOne("Projet_5.Models.Entities.Brand", "Brand")
                         .WithMany()
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Projet_5.Models.Entities.Model", "model")
+                    b.HasOne("Projet_5.Models.Entities.Model", "Model")
                         .WithMany()
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("brand");
+                    b.Navigation("Brand");
 
-                    b.Navigation("model");
+                    b.Navigation("Model");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

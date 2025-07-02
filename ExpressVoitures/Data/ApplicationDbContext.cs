@@ -13,9 +13,7 @@ public class ApplicationDbContext : IdentityDbContext
     }
     public DbSet<Car> Car { get; set; }
     public DbSet<Brand> Brand { get; set; }
-    public DbSet<CarImage> CarImage { get; set; }
     public DbSet<Model> Model { get; set; }
-    public DbSet<Repair> Repair { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
