@@ -2,8 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using ExpressVoitures.Models.Entities;
 using Projet_5.Data;
+using Projet_5.Models.Utils;
 using Microsoft.AspNetCore.Authorization;
-using Projet_5.Models.Entities;
+
 
 namespace Projet_5.Controllers
 {
@@ -34,12 +35,7 @@ namespace Projet_5.Controllers
        .Include(c => c.Model)
        .FirstOrDefaultAsync(c => c.ID == id);
 
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            if (car == null)
+            if (id is null || car is null)
             {
                 return NotFound();
             }
@@ -62,29 +58,7 @@ namespace Projet_5.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (imageFile != null && imageFile.Length > 0)
-                {
-                    // Crée le dossier si nécessaire
-                    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/cars");
-                    if (!Directory.Exists(uploadPath))
-                    {
-                        Directory.CreateDirectory(uploadPath);
-                    }
-
-                    // Crée un nom de fichier unique
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                    var filePath = Path.Combine(uploadPath, fileName);
-
-                    // Sauvegarde le fichier
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await imageFile.CopyToAsync(stream);
-                    }
-
-                    // Enregistre le chemin relatif (pour affichage dans le site)
-                    car.ImageUrl = "/images/cars/" + fileName;
-                }
-
+                await ImageUtils.AddAnImageAsync(car, imageFile, "cars", (c, url) => c.ImageUrl = url);
                 _context.Add(car);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -122,14 +96,11 @@ namespace Projet_5.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, Car car, IFormFile imageFile)
         {
-            if (id != car.ID)
-                return NotFound();
-
             var carInDb = await _context.Car.FindAsync(id);
-            if (carInDb == null)
+            if (carInDb == null || id != car.ID)
                 return NotFound();
 
-            // Mise à jour des autres champs
+            // Mise à jour des champs hors image
             carInDb.SellingPrice = car.SellingPrice;
             carInDb.Year = car.Year;
             carInDb.IsAvailable = car.IsAvailable;
@@ -138,34 +109,7 @@ namespace Projet_5.Controllers
             carInDb.ModelId = car.ModelId;
 
             // Gestion de l'image
-            if (imageFile != null && imageFile.Length > 0)
-            {
-                // 1. Supprimer l'ancienne image si elle existe
-                if (!string.IsNullOrEmpty(carInDb.ImageUrl))
-                {
-                    var oldPath = Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "wwwroot",
-                        carInDb.ImageUrl.TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString())
-                    );
-                    if (System.IO.File.Exists(oldPath))
-                    {
-                        System.IO.File.Delete(oldPath);
-                    }
-                }
-
-                // 2. Enregistrer la nouvelle image dans /images/cars/
-                var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/cars");
-                Directory.CreateDirectory(uploads); // Crée le dossier si besoin
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                var filePath = Path.Combine(uploads, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await imageFile.CopyToAsync(stream);
-                }
-                carInDb.ImageUrl = "/images/cars/" + fileName;
-            }
+            await ImageUtils.UpdateImageAsync(carInDb, imageFile, "cars", c => c.ImageUrl, (c, url) => c.ImageUrl = url);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -178,19 +122,12 @@ namespace Projet_5.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             var car = await _context.Car
-      .Include(c => c.Brand)
-      .Include(c => c.Model)
-      .FirstOrDefaultAsync(c => c.ID == id);
+                      .Include(c => c.Brand)
+                      .Include(c => c.Model)
+                      .FirstOrDefaultAsync(c => c.ID == id);
 
-            if (id == null)
-            {
+            if (id is null || car is null)
                 return NotFound();
-            }
-
-            if (car == null)
-            {
-                return NotFound();
-            }
 
             return View(car);
         }
@@ -205,19 +142,7 @@ namespace Projet_5.Controllers
 
             if (car != null)
             {
-                if (!string.IsNullOrEmpty(car.ImageUrl))
-                {
-                    var imagePath = Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "wwwroot",
-                        car.ImageUrl.TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString())
-                    );
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        System.IO.File.Delete(imagePath);
-                    }
-                }
-
+                ImageUtils.DeleteImageAsync(car, c => c.ImageUrl);
                 _context.Car.Remove(car);
                 await _context.SaveChangesAsync();
             }

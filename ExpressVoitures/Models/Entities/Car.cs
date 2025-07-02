@@ -30,9 +30,9 @@ namespace ExpressVoitures.Models.Entities
         public Brand? Brand { get; set; }
         [Display(Name = "Marque")]
         public int BrandId { get; set; }
+
         [Display(Name = "Modèle")]
         public Model? Model { get; set; }
-
         [Display(Name = "Modèle")]
         public int ModelId { get; set; }
 
