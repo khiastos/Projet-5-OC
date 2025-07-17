@@ -11,7 +11,7 @@ namespace Projet_5.Controllers
         private readonly ICarRepository _carRepository;
         private readonly IBrandRepository _brandRepository;
         private readonly IModelRepository _modelRepository;
-
+        const string ImageFolder = "cars";  
         public CarsController(ICarRepository carRepository, IBrandRepository brandRepository, IModelRepository modelRepository)
         {
             _carRepository = carRepository;
@@ -49,7 +49,7 @@ namespace Projet_5.Controllers
         {
             if (ModelState.IsValid)
             {
-                await ImageUtils.AddAnImageAsync(car, imageFile, "cars", (c, url) => c.ImageUrl = url);
+                await ImageUtils.AddAnImageAsync(car, imageFile, ImageFolder, (c, url) => c.ImageUrl = url);
                 await _carRepository.AddAsync(car);
                 return RedirectToAction(nameof(Index));
             }
@@ -90,7 +90,7 @@ namespace Projet_5.Controllers
             carInDb.ModelId = car.ModelId;
 
             // Gestion de l'image
-            await ImageUtils.UpdateImageAsync(carInDb, imageFile, "cars", c => c.ImageUrl, (c, url) => c.ImageUrl = url);
+            await ImageUtils.UpdateImageAsync(carInDb, imageFile, ImageFolder, c => c.ImageUrl, (c, url) => c.ImageUrl = url);
 
             await _carRepository.UpdateAsync(carInDb);
             return RedirectToAction(nameof(Index));

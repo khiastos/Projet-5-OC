@@ -1,15 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 html {
-  font-size: 14px;
+    font-size: 16px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
@@ -17,6 +16,42 @@ html {
   min-height: 100%;
 }
 
+
+/* Design System */
+:root {
+    /* Colors */
+    --orange: #D9A963;
+    --brunTexte: #2C1810;
+    --brunTitre: #796157;
+    /* Text configuration */
+    --body-font: 'DM Sans';
+    --title-font: 'Libre Baskerville';
+    --body-font-size: 1rem;
+    --h1-font-size: 2rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+}
 body {
-  margin-bottom: 60px;
+    background-color: var(--white);
+    font-family: var(--body-font);
+    font-size: var(--body-font-size);
+    color: var(--brunTexte);
+}
+h1 {
+    font-family: var(--h1-font);
+    font-style: italic;
+    font-size: var(--h1-font-size);
+    color: var(--brunTitre);
+}
+h2 {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-size: var(--h2-font-size);
+    color: var(--brunTexte);
+}
+h3 {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-size: var(--h3-font-size);
+    color: var(--brunTexte);
 }

@@ -55,13 +55,13 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // Crée le rôle Admin s'il n'existe pas
+    // Crï¿½e le rï¿½le Admin s'il n'existe pas
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
     }
 
-    // Assigne le rôle à l'email dans appsettings.json
+    // Assigne le rï¿½le ï¿½ l'email dans appsettings.json
     if (!string.IsNullOrEmpty(adminEmail))
     {
         var user = await userManager.FindByEmailAsync(adminEmail);
