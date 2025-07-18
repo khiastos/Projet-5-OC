@@ -4,47 +4,52 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Ajouter une voiture</h1>
+<div class="form-CRUD-page">
+    <h1 class="form-CRUD-title">Ajouter une voiture</h1>
+    <div class="form-CRUD-subtitle">Tous les champs sont obligatoires</div>
 
-<h4>Tous les champs sont obligatoires</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+    <div class="form-CRUD">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div>
+            <div class="form-group">
                 <label asp-for="SellingPrice"></label>
                 <input asp-for="SellingPrice" class="form-control" />
+                <span asp-validation-for="SellingPrice" class="text-danger"></span>
             </div>
-            <div>
+            <div class="form-group">
                 <label asp-for="Year"></label>
                 <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
             </div>
-            <div>
+            <div class="form-group">
                 <label asp-for="BrandId"></label>
                 <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name"))" class="form-control"></select>
+                <span asp-validation-for="BrandId" class="text-danger"></span>
             </div>
-            <div>
+            <div class="form-group">
                 <label asp-for="ModelId"></label>
                 <select asp-for="ModelId" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name"))" class="form-control"></select>
+                <span asp-validation-for="ModelId" class="text-danger"></span>
             </div>
-            <div>
+            <div class="form-group">
                 <label asp-for="Finish"></label>
                 <input asp-for="Finish" class="form-control" />
+                <span asp-validation-for="Finish" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" type="file" class="form-control" />
-                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                <div class="form-CRUD-upload">
+                    <input asp-for="ImageFile" type="file" class="form-control form-CRUD-file" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
             </div>
 
-            <button type="submit">Créer</button>
+            <button type="submit" class="btn-cta form-CRUD-btn">Publier</button>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Retour</a>
+    <div>
+        <a asp-action="Index" class="form-CRUD-back">Retour</a>
+    </div>
 </div>

@@ -1,73 +1,36 @@
 ﻿@model ExpressVoitures.Models.Entities.Car
 
 @{
-    ViewData["Title"] = "Supprimer";
+	ViewData["Title"] = "Supprimer";
 }
 
-<h1>Supprimer</h1>
+<div class="form-CRUD-page">
+	<h1 class="form-CRUD-title">Supprimer</h1>
 
-<div>
-    @if (!string.IsNullOrEmpty(Model.ImageUrl))
-    {
-        <img src="@Model.ImageUrl" alt="Photo" width="250" style="object-fit:contain;max-height:180px;margin-bottom:20px;" />
-    }
-    else
-    {
-        <span>Pas d'image</span>
-    }
-</div>
+	<h3 class="mb-2" style="font-family: var(--body-font); color: var(--brunTexte); font-size: 1.2rem;">
+		Voulez-vous vraiment supprimer : <strong>@Model.Brand?.Name @Model.Model?.Name</strong> ?
+	</h3>
 
-<h3>Voulez-vous vraiment supprimer : <strong>@Model.Brand.Name @Model.Model.Name</strong> ?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SellingPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SellingPrice)
-        </dd>
+	<div class="mb-3">
+		<img src="@Model.ImageUrl"
+			 alt="Photo"
+			 class="fiche-voiture-img-suppr" />
+	</div>
 
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Year)
-        </dd>
+	<div class="form-CRUD" style="margin-bottom:18px;">
+		<div class="fiche-info-suppr" style="text-align:left;">
+			<div><span class="index">Prix de vente :</span> <span>@Model.SellingPrice €</span></div>
+			<div><span class="index">Année :</span> <span>@Model.Year</span></div>
+			<div><span class="index">Disponibilité :</span> <span>@(Model.IsAvailable ? "Disponible" : "Vendue")</span></div>
+			<div><span class="index">Marque :</span> <span>@Model.Brand?.Name</span></div>
+			<div><span class="index">Modèle :</span> <span>@Model.Model?.Name</span></div>
+			<div><span class="index">Finition :</span> <span>@Model.Finish</span></div>
+		</div>
 
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsAvailable)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsAvailable)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Brand.Name)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Model.Name)
-        </dd>
-
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Finish)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Finish)
-        </dd>
-       
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Confirmer la suppression" class="btn btn-danger" /> |
-        <a asp-action="Index">Retour</a>
-    </form>
+		<form asp-action="Delete" style="margin-top:22px;">
+			<input type="hidden" asp-for="ID" />
+			<button type="submit" class="btn-cta form-CRUD-btn btn-suppr" style="width:200px">Confirmer la suppression</button>
+			<a asp-action="Index" class="form-CRUD-back" style="margin-left:22px;">Retour</a>
+		</form>
+	</div>
 </div>
