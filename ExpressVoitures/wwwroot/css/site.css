@@ -23,6 +23,7 @@ html {
     --orange: #D9A963;
     --brunTexte: #2C1810;
     --brunTitre: #796157;
+    --noir: #000000;
     /* Text configuration */
     --body-font: 'DM Sans';
     --title-font: 'Libre Baskerville';
@@ -30,15 +31,16 @@ html {
     --h1-font-size: 2rem;
     --h2-font-size: 1.5rem;
     --h3-font-size: 1.25rem;
+    --fw-bold: 700;
 }
 body {
-    background-color: var(--white);
+
     font-family: var(--body-font);
     font-size: var(--body-font-size);
     color: var(--brunTexte);
 }
 h1 {
-    font-family: var(--h1-font);
+    font-family: var(--title-font);
     font-style: italic;
     font-size: var(--h1-font-size);
     color: var(--brunTitre);
@@ -55,3 +57,58 @@ h3 {
     font-size: var(--h3-font-size);
     color: var(--brunTexte);
 }
+.menu {
+    font-family: var(--title-font) !important;
+    color: var(--noir) !important;
+}
+.logo {
+    font-family: var(--title-font); 
+    font-size: var(--h3-font-size);
+    font-weight: 600;
+    color: var(--noir);
+}
+
+.prixIndex {
+    font-family: var(--body-font);
+    font-size: var(--h2-font-size);
+    font-weight: 500;
+    color: var(--brunTexte);
+}
+.index {
+    font-family: var(--body-font);
+    font-size: var(--body-font);
+    color: var(--brunTitre);
+}
+.btn-cta {
+    background-color: var(--orange);
+    color: var(--brunTexte);
+    font-family: var(--body-font);
+    border-radius: 6px;
+    padding: 13px 10px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+    .btn-cta:hover,
+    .btn-cta:focus {
+        background-color: #bc883b;
+        color: var(--brunTitre);
+        text-decoration: none;
+    }
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+}
+
+.logo-container, .login-actions {
+    text-align: center;
+    width: 100%;
+}
+
+
+
+
+

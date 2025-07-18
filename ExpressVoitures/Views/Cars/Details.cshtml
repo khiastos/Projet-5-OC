@@ -1,76 +1,46 @@
 ﻿@model ExpressVoitures.Models.Entities.Car
 
 @{
-	ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails";
 }
 
-<h1>Détails</h1>
+<a asp-action="Index" class="retour-link mb-4 d-inline-block text-black text-decoration-none mt-5">&larr; Retour</a>
 
-<div>
-	@if (!string.IsNullOrEmpty(Model.ImageUrl))
-	{
-		<img src="@Model.ImageUrl" alt="Photo" width="250" style="object-fit:contain;max-height:180px;margin-bottom:20px;" />
-	}
-	else
-	{
-		<span>Pas d'image</span>
-	}
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-7 text-center text-md-start">
+            <img src="@Model.ImageUrl"
+                 alt="Photo"
+                 class="img-fluid fiche-voiture-img"
+                 style="border-radius: 16px; max-width: 100%; height: auto;" />
+        </div>
+        <div class="col-md-5 mt-5 mt-md-5">
+            @if (User.IsInRole("Admin"))
+            {
+                <p>Vous avez publié cette annonce, vous pouvez la :</p>
+                <a asp-action="Edit" asp-route-id="@Model.ID" style="margin-right: 40px; color:grey">Modifier</a>
+                <a asp-action="Delete" asp-route-id="@Model.ID" style="color:red">Supprimer</a>
+            }
+            <div class="prixIndex" style="margin-bottom: 18px; margin-top: 30px; font-weight:700; font-size:xx-large">
+                    @Model.SellingPrice&nbsp;€
+            </div>
+            <div class="index">
+                <div style="margin-bottom: 18px;">Année : <span>@Model.Year</span></div>
+                <div style="margin-bottom: 18px;">Marque : <span>@Model.Brand?.Name</span></div>
+                <div style="margin-bottom: 18px;">Modèle : <span>@Model.Model?.Name</span></div>
+                <div style="margin-bottom: 18px;">Finition : <span>@Model.Finish</span></div>
+            </div>
+
+            <div class="mb-4">
+                @if (@Model.IsAvailable)
+                {
+                    <span class="badge bg-success">Disponible</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Vendue</span>
+                }
+            </div>
+        </div>
+    </div>
 </div>
-
-<div>
-	<hr />
-	<dl class="row">
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.SellingPrice)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.SellingPrice) €
-		</dd>
-
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Year)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Year)
-		</dd>
-
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.IsAvailable)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.IsAvailable)
-		</dd>
-
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Brand)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Brand.Name)
-		</dd>
-
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Model)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Model.Name)
-		</dd>
-
-
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Finish)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Finish)
-		</dd>
-
-	</dl>
-</div>
-<div>
-	@if (User.IsInRole("Admin"))
-	{
-		<a asp-action="Edit" asp-route-id="@Model.ID">Modifier</a>
-		<a asp-action="Delete" asp-route-id="@Model.ID">Supprimer</a>
-	}
-	<a asp-action="Index">Retour</a>
-</div>
-

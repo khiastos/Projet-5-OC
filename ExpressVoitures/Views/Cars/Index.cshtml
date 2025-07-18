@@ -4,57 +4,50 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>Nos voitures</h1>
-
-<p>
+<h1 class="text-center mt-5 mb-4">Nos voitures</h1>
+<p class="text-center mb-5">
     @if (User.IsInRole("Admin"))
     {
-        <a asp-action="Create">+ Ajouter une voiture</a>
+        <a asp-action="Create" class="btn-cta mb-5">+ Ajouter une voiture</a>
     }
-	
 </p>
-<table class="table">
-	<thead>
-		<tr>
-			<th>Image</th>
-			<th>@Html.DisplayNameFor(model => model.SellingPrice)</th>
-			<th>@Html.DisplayNameFor(model => model.Year)</th>
-			<th>@Html.DisplayNameFor(model => model.IsAvailable)</th>
-			<th>@Html.DisplayNameFor(model => model.Finish)</th>
-			<th>@Html.DisplayNameFor(model => model.Model)</th>
-			<th>@Html.DisplayNameFor(model => model.Brand)</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-    <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="d-flex flex-row align-items-center card border-0 shadow-0 h-100 w-100" style="border-radius: 18px;">
+
+                    <div>
                         @if (!string.IsNullOrEmpty(item.ImageUrl))
                         {
-                        <a asp-action="Details" asp-route-id="@item.ID">
-                            <img src="@item.ImageUrl" alt="Photo" width="150" style="object-fit:contain;max-height:100px;" />
-                        </a>
+                            <a asp-action="Details" asp-route-id="@item.ID">
+                                <img src="@item.ImageUrl" alt="Photo" width="300" style="border-radius: 10px;object-fit:cover;max-height:300px;" />
+                            </a>
                         }
-                        else
-                        {
-                        <span>Pas d'image</span>
-                        }
-                </td>
-                <td>@item.SellingPrice €</td>
-                <td>@item.Year</td>
-                <td>
-                        @(item.IsAvailable ? "Disponible dès maintenant" : "Vendue")
-                </td>
-                <td>@item.Finish</td>
-                <td>@item.Model?.Name</td>
-                <td>@item.Brand?.Name</td>
-                <td>
-                </td>
-            </tr>
-            }
-    </tbody>
+                    </div>
+                    <div class="ms-4">
+                        <div class="prixIndex">@item.SellingPrice €</div>
+                        <div class ="index">Année : @item.Year</div>
+                        <div class="index">Marque : @item.Brand?.Name</div>
+                        <div class="index">Modèle : @item.Model?.Name</div>
+                        <div class="index">Finition : @item.Finish</div>
+                        <div>
+                            @if (item.IsAvailable)
+                            {
+                                <span class="badge bg-success">Disponible</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Vendue</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
-</table>
