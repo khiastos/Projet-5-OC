@@ -7,6 +7,7 @@ namespace Projet_5.Models.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Le nom du modèle est obligatoire")]
+        [Display(Name = "Nom")]
         public required string Name { get; set; }
     }
 }

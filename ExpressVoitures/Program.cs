@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Projet_5.Data;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +40,13 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+var supportedCultures = new[] { new CultureInfo("fr-FR") };
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("fr-FR"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 app.UseRouting();
 
 app.UseAuthorization();

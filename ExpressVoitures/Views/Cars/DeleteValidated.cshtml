@@ -1,0 +1,14 @@
+﻿@model ExpressVoitures.Models.Entities.Car
+
+@{
+	ViewData["Title"] = "Suppression validée";
+    var title = TempData["DeletedCarTitle"] as string;
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 70vh; text-align: center;">
+    <h2 class="fw-semibold" style="font-size: 2rem; font-style: italic; color: var(--brunTitre);">
+        @title
+    </h2>
+    <p style="margin-top: 0.5rem; font-size: 1.2rem; color:var(--brunTitre); font-style: italic">a bien été supprimée</p>
+    <a asp-action="Index" class="btn-cta">Retour à l’accueil</a>
+</div>

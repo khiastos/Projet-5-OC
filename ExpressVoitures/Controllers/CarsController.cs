@@ -2,6 +2,7 @@
 using ExpressVoitures.Models.Entities;
 using Projet_5.Models.Utils;
 using Microsoft.AspNetCore.Authorization;
+using AspNetCoreGeneratedDocument;
 
 
 namespace Projet_5.Controllers
@@ -51,9 +52,16 @@ namespace Projet_5.Controllers
             {
                 await ImageUtils.AddAnImageAsync(car, imageFile, ImageFolder, (c, url) => c.ImageUrl = url);
                 await _carRepository.AddAsync(car);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("CreateValidated");
             }
+            ViewBag.Brands = await _brandRepository.GetAllAsync();
+            ViewBag.Models = await _modelRepository.GetAllAsync();
             return View(car);
+        }
+
+        public IActionResult CreateValidated()
+        {
+            return View();
         }
 
         // GET: Cars/Edit/5
@@ -118,11 +126,19 @@ namespace Projet_5.Controllers
 
             if (car != null)
             {
+                var title = $"{car.Year} {car.Brand?.Name} {car.Model?.Name}";
+                TempData["DeletedCarTitle"] = title;
                 ImageUtils.DeleteImageAsync(car, c => c.ImageUrl);
                 await _carRepository.DeleteAsync(id);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("DeleteValidated");
         }
+
+        public IActionResult DeleteValidated()
+        {
+            return View();
+        }
+
     }
 }

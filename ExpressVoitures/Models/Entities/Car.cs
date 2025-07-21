@@ -13,11 +13,12 @@ namespace ExpressVoitures.Models.Entities
         [RegularExpression(@"^-?\d+([.,]\d{1,2})?$", ErrorMessage = "Le prix doit être un nombre valide avec jusqu'à deux décimales.")]
         [Range(0.01, int.MaxValue, ErrorMessage = "Le prix doit être supérieur à 0")]
 
-        public double SellingPrice { get; set; }
+        public double? SellingPrice { get; set; }
 
         [Display(Name = "Année")]
         [Required(ErrorMessage = "L'année est obligatoire")]
-        public int Year { get; set; }
+        [Range(1950, 2025, ErrorMessage = "Rentrez une année valide entre 1950 et 2025")]
+        public int? Year { get; set; }
 
         [Display(Name = "Disponible à la vente")]
         public bool IsAvailable { get; set; } = true;
@@ -36,8 +37,8 @@ namespace ExpressVoitures.Models.Entities
         [Display(Name = "Modèle")]
         public int ModelId { get; set; }
 
+        [Required(ErrorMessage = "La photo est obligatoire")]
         [Display(Name = "Photo de la voiture")]
-        [NotMapped] public IFormFile? ImageFile { get; set; }
         public string? ImageUrl { get; set; }
     }
 
