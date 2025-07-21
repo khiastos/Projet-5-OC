@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Projet_5.Models.Entities;
 
 namespace ExpressVoitures.Models.Entities
@@ -37,7 +36,6 @@ namespace ExpressVoitures.Models.Entities
         [Display(Name = "Modèle")]
         public int ModelId { get; set; }
 
-        [Required(ErrorMessage = "La photo est obligatoire")]
         [Display(Name = "Photo de la voiture")]
         public string? ImageUrl { get; set; }
     }

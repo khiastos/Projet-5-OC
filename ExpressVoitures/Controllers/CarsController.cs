@@ -46,18 +46,31 @@ namespace Projet_5.Controllers
 
         // POST: Cars/Create
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Create(Car car, IFormFile imageFile)
         {
+
+            /* Gestion du message d'erreur pour l'image ici car c'est ici que IFormFile est accessible, comparé à dans l'entité Car qui ne reçoit pas
+             directement le fichier depuis la vue, ou alors c'est faisable en rajoutant un IFormFile dans l'entité car */
+
+            if (imageFile == null || imageFile.Length == 0)
+            {
+                ModelState.AddModelError("ImageUrl", "La photo est obligatoire");
+            }
+
             if (ModelState.IsValid)
             {
                 await ImageUtils.AddAnImageAsync(car, imageFile, ImageFolder, (c, url) => c.ImageUrl = url);
                 await _carRepository.AddAsync(car);
                 return RedirectToAction("CreateValidated");
             }
+
             ViewBag.Brands = await _brandRepository.GetAllAsync();
             ViewBag.Models = await _modelRepository.GetAllAsync();
             return View(car);
         }
+
+
 
         public IActionResult CreateValidated()
         {
