@@ -27,11 +27,14 @@
                 <label asp-for="BrandId"></label>
                 <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name"))" class="form-control"></select>
                 <span asp-validation-for="BrandId" class="text-danger"></span>
+                <a asp-controller="Brands" asp-action="Index" class="form-CRUD-back">Ajouter une marque</a>
+
             </div>
             <div class="form-group">
                 <label asp-for="ModelId"></label>
                 <select asp-for="ModelId" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name"))" class="form-control"></select>
                 <span asp-validation-for="ModelId" class="text-danger"></span>
+                <a asp-controller="Models" asp-action="Index" class="form-CRUD-back">Ajouter un modèle</a>
             </div>
             <div class="form-group">
                 <label asp-for="Finish"></label>

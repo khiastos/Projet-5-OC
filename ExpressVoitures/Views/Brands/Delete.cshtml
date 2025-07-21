@@ -3,25 +3,19 @@
 @{
     ViewData["Title"] = "Delete";
 }
+<h1 class="text-center mt-5">Supprimer la marque</h1>
+<hr />
+<div class="text-center mt-5">
 
-<h1>Delete</h1>
+    <h3 class="mb-4" style="font-family: var(--body-font); color: var(--brunTexte); font-size: 1.2rem;">
+        Voulez-vous vraiment supprimer : <strong>@Model.Name</strong> ?
+    </h3>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Brand</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Supprimer" class="btn-cta form-CRUD-btn btn-suppr" style="width:100px" />
+                <a asp-action="Index" style="color:black">Retour</a>
+        </form>
+    </div>
 </div>
