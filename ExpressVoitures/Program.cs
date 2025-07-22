@@ -1,8 +1,8 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Projet_5.Data;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Shared/Error");
+    app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -64,13 +64,13 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // Cr�e le r�le Admin s'il n'existe pas
+    // Crée le rôle Admin s'il n'existe pas
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
     }
 
-    // Assigne le r�le � l'email dans appsettings.json
+    // Assigne le rôle à l'email dans appsettings.json
     if (!string.IsNullOrEmpty(adminEmail))
     {
         var user = await userManager.FindByEmailAsync(adminEmail);

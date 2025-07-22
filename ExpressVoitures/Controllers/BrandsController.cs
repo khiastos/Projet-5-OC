@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Projet_5.Data;
 using Projet_5.Models.Entities;
 
 namespace Projet_5.Controllers

@@ -4,14 +4,13 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center mt-5 mb-4">Nos voitures</h1>
+<h1 class="text-center mt-5 mb-4 display-6">Nos voitures</h1>
 <p class="text-center mb-5">
     @if (User.IsInRole("Admin"))
     {
         <a asp-action="Create" class="btn-cta mb-3">+ Ajouter une voiture</a>
     }
 </p>
-
 
 <div class="container">
     <div class="row">
@@ -24,7 +23,10 @@
                         @if (!string.IsNullOrEmpty(item.ImageUrl))
                         {
                             <a asp-action="Details" asp-route-id="@item.ID">
-                                <img src="@item.ImageUrl" alt="Photo" width="300" style="border-radius: 10px;object-fit:cover;max-height:300px;" />
+                                <img src="@item.ImageUrl" alt="Photo" width="300" style="border-radius: 10px;object-fit:cover;max-height:300px;" 
+                                title="Photo de la @item.Brand?.Name @item.Model?.Name (@item.Year)"
+                                     alt="Photo de la @item.Brand?.Name @item.Model?.Name (@item.Year)" />
+
                             </a>
                         }
                     </div>
@@ -50,4 +52,3 @@
         }
     </div>
 </div>
-

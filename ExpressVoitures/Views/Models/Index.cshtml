@@ -4,10 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center mt-5 mb-4">Les modèles</h1>
-<p class="text-center mb-5">
-    <a asp-action="Create" class="btn-cta mb-3">+ Ajouter un nouveau modèle</a>
+<h1 class="text-center mt-5 display-6">Les modèles</h1>
+<p class="text-center">
+    <a asp-action="Create" class="btn-cta">+ Ajouter un nouveau modèle</a>
 </p>
+
+<a asp-action="Create" asp-controller="Cars" class="retour-link mb-4 d-inline-block text-black text-decoration-none mt-2">
+    &larr; Retour
+</a>
 
 <table class="table">
     <thead>

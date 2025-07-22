@@ -1,9 +1,7 @@
-﻿using AspNetCoreGeneratedDocument;
-using ExpressVoitures.Models.Entities;
+﻿using ExpressVoitures.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet_5.Models.Utils;
-using static Projet_5.Models.Utils.ImageUtils;
 
 
 namespace Projet_5.Controllers
@@ -13,7 +11,7 @@ namespace Projet_5.Controllers
         private readonly ICarRepository _carRepository;
         private readonly IBrandRepository _brandRepository;
         private readonly IModelRepository _modelRepository;
-        const string ImageFolder = "cars";  
+        const string ImageFolder = "cars";
         public CarsController(ICarRepository carRepository, IBrandRepository brandRepository, IModelRepository modelRepository)
         {
             _carRepository = carRepository;
@@ -32,6 +30,10 @@ namespace Projet_5.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var car = await _carRepository.GetByIdAsync(id);
+            if (car is null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
             return View(car);
         }
 
@@ -111,7 +113,9 @@ namespace Projet_5.Controllers
         {
             var carInDb = await _carRepository.GetByIdAsync(id);
             if (carInDb == null || id != car.ID)
-                return NotFound();
+            {
+                return RedirectToAction("Error", "Home");
+            }
 
             // Mise à jour des champs hors image
             carInDb.SellingPrice = car.SellingPrice;
@@ -148,7 +152,9 @@ namespace Projet_5.Controllers
             var car = await _carRepository.GetByIdAsync(id);
 
             if (car is null)
-                return NotFound();
+            {
+                return RedirectToAction("Error", "Home");
+            }
 
             return View(car);
         }
@@ -167,6 +173,10 @@ namespace Projet_5.Controllers
                 TempData["DeletedCarTitle"] = title;
                 ImageUtils.DeleteImageAsync(car, c => c.ImageUrl);
                 await _carRepository.DeleteAsync(id);
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
             }
 
             return RedirectToAction("DeleteValidated");
