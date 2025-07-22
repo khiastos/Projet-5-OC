@@ -115,8 +115,13 @@ namespace Projet_5.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+                    if (Url.IsLocalUrl(returnUrl))
+                        return LocalRedirect(returnUrl);
+                    else
+                        return RedirectToPage("./Index"); 
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
@@ -128,7 +133,7 @@ namespace Projet_5.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Adresse email et/ou mot de passe incorrect");
                     return Page();
                 }
             }

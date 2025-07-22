@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreGeneratedDocument;
 using ExpressVoitures.Models.Entities;
-using Projet_5.Models.Utils;
 using Microsoft.AspNetCore.Authorization;
-using AspNetCoreGeneratedDocument;
+using Microsoft.AspNetCore.Mvc;
+using Projet_5.Models.Utils;
+using static Projet_5.Models.Utils.ImageUtils;
 
 
 namespace Projet_5.Controllers
@@ -57,6 +58,16 @@ namespace Projet_5.Controllers
             {
                 ModelState.AddModelError("ImageUrl", "La photo est obligatoire");
             }
+            else
+            {
+                // Vérification de l'image, pour contrôler ce qui peut être ajouté ou non au site (protection contre les attaques/script XXS)
+                string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".webp" };
+                var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("ImageUrl", "Seuls les fichiers image (jpg, jpeg, png, webp) sont autorisés.");
+                }
+            }
 
             if (ModelState.IsValid)
             {
@@ -110,7 +121,20 @@ namespace Projet_5.Controllers
             carInDb.BrandId = car.BrandId;
             carInDb.ModelId = car.ModelId;
 
-            // Gestion de l'image
+
+            // Vérification de l'image, pour contrôler ce qui peut être ajouté ou non au site (protection contre les attaques/script XXS)
+            if (imageFile != null)
+            {
+                string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".webp" };
+                var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("ImageUrl", "Seuls les fichiers image (jpg, jpeg, png, webp) sont autorisés.");
+                    return View(car);
+                }
+            }
+
+            // Update l'image si valide
             await ImageUtils.UpdateImageAsync(carInDb, imageFile, ImageFolder, c => c.ImageUrl, (c, url) => c.ImageUrl = url);
 
             await _carRepository.UpdateAsync(carInDb);

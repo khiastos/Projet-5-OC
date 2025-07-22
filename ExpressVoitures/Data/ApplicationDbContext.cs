@@ -15,12 +15,4 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Brand> Brand { get; set; }
     public DbSet<Model> Model { get; set; }
 
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(
-            "Server=(localdb)\\mssqllocaldb;Database=Projet5;Trusted_Connection=True;MultipleActiveResultSets=true"
-        );
-    }
-
 }

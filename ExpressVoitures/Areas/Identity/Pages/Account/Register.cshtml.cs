@@ -131,7 +131,7 @@ namespace Projet_5.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirmer l'email",
                         $"Merci de confirmer votre email en <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>cliquant ici.</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
