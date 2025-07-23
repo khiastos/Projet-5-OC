@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ExpressVoitures.Models.Entities.Car>
 
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
 }
 
 <h1 class="text-center mt-5 mb-4 display-6">Nos voitures</h1>
@@ -11,28 +11,26 @@
         <a asp-action="Create" class="btn-cta mb-3">+ Ajouter une voiture</a>
     }
 </p>
-
 <div class="container">
-    <div class="row">
+    <div class="row gx-5 gy-5" style="max-width: 1100px; margin: inherit">
         @foreach (var item in Model)
         {
-            <div class="col-md-6 mb-4">
-                <div class="d-flex flex-row align-items-center card border-0 shadow-0 h-100 w-100" style="border-radius: 18px;">
-
+            <div class="col-6">
+                <div class="d-flex flex-row ms-5" style="border-radius: 18px;">
                     <div>
                         @if (!string.IsNullOrEmpty(item.ImageUrl))
                         {
                             <a asp-action="Details" asp-route-id="@item.ID">
-                                <img src="@item.ImageUrl" alt="Photo" width="300" style="border-radius: 10px;object-fit:cover;max-height:300px;" 
-                                title="Photo de la @item.Brand?.Name @item.Model?.Name (@item.Year)"
+                                <img src="@item.ImageUrl"
+                                     style="width: 300px; height: 200px; border-radius: 10px; object-fit: cover; max-height: 300px;"
+                                     title="Photo de la @item.Brand?.Name @item.Model?.Name (@item.Year)"
                                      alt="Photo de la @item.Brand?.Name @item.Model?.Name (@item.Year)" />
-
                             </a>
                         }
                     </div>
                     <div class="ms-4">
                         <div class="prixIndex">@item.SellingPrice €</div>
-                        <div class ="index">Année : @item.Year</div>
+                        <div class="index">Année : @item.Year</div>
                         <div class="index">Marque : @item.Brand?.Name</div>
                         <div class="index">Modèle : @item.Model?.Name</div>
                         <div class="index">Finition : @item.Finish</div>

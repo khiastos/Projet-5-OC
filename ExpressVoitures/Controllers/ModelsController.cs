@@ -14,6 +14,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Models
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var models = await _modelRepository.GetAllAsync();
@@ -21,6 +22,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Models/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int id)
         {
             var model = await _modelRepository.GetByIdAsync(id);
@@ -71,7 +73,7 @@ namespace Projet_5.Controllers
 
             modelInDb.Name = model.Name;
 
-            await _modelRepository.UpdateAsync(modelInDb); 
+            await _modelRepository.UpdateAsync(modelInDb);
             return RedirectToAction(nameof(Index));
         }
 

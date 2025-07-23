@@ -268,6 +268,14 @@ input.no-spin {
     -moz-appearance: textfield;
 }
 
+.carte-voiture {
+    border-radius: 16px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+
 
 
 

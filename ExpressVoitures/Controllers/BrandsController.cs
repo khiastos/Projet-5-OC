@@ -14,6 +14,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Brands
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var brands = await _brandRepository.GetAllAsync();
@@ -21,6 +22,7 @@ namespace Projet_5.Controllers
         }
 
         // GET: Brands/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int id)
         {
             var brand = await _brandRepository.GetByIdAsync(id);

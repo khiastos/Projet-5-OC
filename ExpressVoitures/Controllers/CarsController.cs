@@ -49,7 +49,7 @@ namespace Projet_5.Controllers
 
         // POST: Cars/Create
         [HttpPost]
-        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(Car car, IFormFile imageFile)
         {
 
@@ -83,8 +83,7 @@ namespace Projet_5.Controllers
             return View(car);
         }
 
-
-
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateValidated()
         {
             return View();
@@ -182,6 +181,7 @@ namespace Projet_5.Controllers
             return RedirectToAction("DeleteValidated");
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteValidated()
         {
             return View();

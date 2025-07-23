@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label asp-for="ImageUrl" class="control-label"></label>
                 <div class="form-CRUD-upload">
-                    <input type="file" name="imageFile" class="form-control form-CRUD-file" />
+                    <input type="file" name="imageFile" class="form-control form-CRUD-file" accept= ".jpg,.jpeg,.png,.webp" />
                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
                 </div>
             </div>
