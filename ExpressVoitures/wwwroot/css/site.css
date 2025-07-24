@@ -27,86 +27,101 @@ html {
     /* Font configuration */
     --body-font: 'DM Sans';
     --title-font: 'Libre Baskerville';
-    --body-font-size: 0.97rem; /* compact */
-    --h1-font-size: 1.4rem;
-    --h2-font-size: 1.1rem;
-    --h3-font-size: 1rem;
+    --body-font-size: 0.97rem; 
+    --h1-font-size: 2rem;
+    --h2-font-size: 1.7rem;
+    --h3-font-size: 1.4rem;
     --fw-bold: 700;
 }
 
-body {
-    background: #fff;
-    font-family: var(--body-font), Arial, sans-serif;
+.body {
+    font-family: var(--body-font), Arial;
     font-size: var(--body-font-size);
     color: var(--brunTexte);
 }
 
-h1 {
-    font-family: var(--title-font), serif;
+.titre-h1 {
+    font-family: var(--title-font);
     font-style: italic;
     font-size: var(--h1-font-size);
     color: var(--brunTitre);
     margin-bottom: 0.5em;
 }
 
-h2 {
-    font-family: var(--title-font), serif;
+.titre-h2 {
+    font-family: var(--title-font);
     font-style: italic;
     font-size: var(--h2-font-size);
-    color: var(--brunTexte);
+    color: var(--brunTitre);
 }
 
-h3 {
-    font-family: var(--title-font), serif;
+.titre-h3 {
+    font-family: var(--title-font);
     font-style: italic;
+    font-size: var(--h3-font-size);
+    color: var(--brunTitre);
+}
+
+.titre-h3-noir {
+    font-family: var(--body-font);
     font-size: var(--h3-font-size);
     color: var(--brunTexte);
 }
 
 .menu {
-    font-family: var(--title-font), serif !important;
+    font-family: var(--title-font) !important;
     color: var(--noir) !important;
     font-size: var(--body-font-size);
 }
 
 .logo {
-    font-family: var(--title-font), serif;
+    font-family: var(--title-font);
     font-size: var(--h3-font-size);
     font-weight: 600;
     color: var(--noir);
 }
 
+.photo {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
 .prixIndex {
-    font-family: var(--body-font), Arial, sans-serif;
+    font-family: var(--title-font);
     font-size: var(--h2-font-size);
-    font-weight: 500;
+    font-weight: 00;
     color: var(--brunTexte);
 }
 
 .index {
-    font-family: var(--body-font), Arial, sans-serif;
+    font-family: var(--body-font);
     font-size: var(--body-font-size);
     color: var(--brunTitre);
 }
 
 .btn-cta {
+    display: inline-flex;
+    justify-content: center; 
+    align-items: center;
     background-color: var(--orange);
     color: var(--brunTexte);
-    font-family: var(--body-font), Arial, sans-serif;
+    font-family: var(--body-font);
     border-radius: 6px;
     padding: 7px 16px;
     font-size: 1rem;
     cursor: pointer;
-    display: inline-block;
     text-align: center;
     text-decoration: none;
     min-width: 100px;
+    margin: 14px;
 }
-
+    .btn-cta:active,
     .btn-cta:hover,
     .btn-cta:focus {
-        background-color: #bc883b;
-        color: var(--brunTitre);
+        background-color: #ae7f37 !important;
+        color: var(--brunTitre) !important;
         text-decoration: none;
     }
 
@@ -126,23 +141,7 @@ h3 {
     margin-top: 24px;
 }
 
-.form-CRUD-title {
-    font-family: var(--title-font), serif;
-    font-style: italic;
-    font-size: 2rem;
-    color: var(--brunTitre);
-    margin-bottom: 0.3em;
-    margin-top: 1.5em;
-}
-
-.form-CRUD-subtitle {
-    color: var(--brunTexte);
-    font-size: 0.98rem;
-    margin-bottom: 1em;
-}
-
 .form-CRUD {
-    background: #fff;
     border-radius: 12px;
     max-width: 330px;
     margin: 0 auto 24px auto;
@@ -156,12 +155,12 @@ h3 {
     }
 
         .form-CRUD .form-group label {
-            font-family: var(--body-font), Arial, sans-serif;
+            font-family: var(--body-font);
             color: var(--brunTexte);
             margin-bottom: 5px;
             font-weight: 500;
             display: block;
-            font-size: 0.97rem;
+            font-size: 1rem;
         }
 
     .form-CRUD .form-control {
@@ -170,93 +169,51 @@ h3 {
         border: 2px solid #a69385;
         border-radius: 6px;
         font-size: 0.98rem;
-        font-family: var(--body-font), Arial, sans-serif;
+        font-family: var(--body-font);
         margin-top: 3px;
-        background: #fff;
         color: var(--brunTexte);
-        transition: border 0.18s;
         box-sizing: border-box;
     }
 
         .form-CRUD .form-control:focus {
             border-color: var(--orange);
-            outline: none;
         }
 
-.form-CRUD-upload {
-    width: 100%;
-}
-
-.form-CRUD-file {
-    background: #fff;
+.form-CRUD-upload-img {
     border: 2px solid #a69385;
     border-radius: 6px;
     padding: 8px;
-    color: #a69385;
-    font-size: 0.98rem;
+    color: var(--brunTexte);
+    font-size: 1rem;
     margin-top: 3px;
 }
 
-.btn-cta.form-CRUD-btn {
-    width: 100px;
-    padding: 7px 0;
-    font-size: 0.97rem;
-    margin: 14px auto 0 auto;
-    border-radius: 7px;
-}
-
-.form-CRUD-back {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 0.98rem;
-    color: var(--brunTexte);
-    text-decoration: underline;
-    transition: color 0.18s;
-}
-
-    .form-CRUD-back:hover {
-        color: var(--orange);
-    }
-
-@media (max-width: 600px) {
-    .form-CRUD {
-        max-width: 96vw;
-        padding: 11px 2vw;
-    }
-}
 
 .btn-suppr {
-    background: #E96C4B;
+    background-color: #E96C4B;
     color: #fff !important;
-    border: none;
-    margin-right: 12px;
+    font-family: var(--body-font);
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: center;
+    min-width: 100px;
+    min-height: 40px
 }
-
-    .btn-suppr:hover, .btn-suppr:focus {
-        background: #c84b2a;
-        color: #fff !important;
+    .btn-suppr:hover,
+    .btn-cta:focus {
+        background-color: #c84b2a;
+        color: #c84b2a;
+        text-decoration: none;
     }
 
-.fiche-info-suppr > div {
+.fiche-info-suppr {
     font-family: var(--body-font);
     font-size: 0.98rem;
     margin-bottom: 6px;
     color: var(--brunTexte);
+    line-height: 2;
 }
 
-.fiche-info-suppr .index {
-    color: var(--brunTitre);
-    font-weight: 500;
-}
-.fiche-voiture-img-suppr {
-    display: block;
-    margin: 0 auto 18px auto;
-    max-width: 100%;
-    max-height: 220px;
-    min-width: 220px;
-    border-radius: 14px;
-    object-fit: cover;
-}
 
 input.no-spin::-webkit-outer-spin-button,
 input.no-spin::-webkit-inner-spin-button {
@@ -268,12 +225,6 @@ input.no-spin {
     -moz-appearance: textfield;
 }
 
-.carte-voiture {
-    border-radius: 16px;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
 
 
 

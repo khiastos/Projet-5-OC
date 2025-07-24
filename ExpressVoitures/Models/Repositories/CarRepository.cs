@@ -14,16 +14,16 @@ public class CarRepository : ICarRepository
     public async Task<IEnumerable<Car>> GetAllAsync()
     {
         return await _context.Car
-            .Include(c => c.Brand)
-            .Include(c => c.Model)
+            .Include(car => car.Brand)
+            .Include(car => car.Model)
             .ToListAsync();
     }
     public async Task<Car?> GetByIdAsync(int id)
     {
         return await _context.Car
-            .Include(c => c.Brand)
-            .Include(c => c.Model)
-            .FirstOrDefaultAsync(c => c.ID == id); ;
+            .Include(car => car.Brand)
+            .Include(car => car.Model)
+            .FirstOrDefaultAsync(car => car.ID == id); ;
     }
 
     public async Task AddAsync(Car car)

@@ -19,7 +19,7 @@ public class BrandRepository : IBrandRepository
     public async Task<Brand?> GetByIdAsync(int id)
     {
         return await _context.Brand
-            .FirstOrDefaultAsync(c => c.Id == id);
+            .FirstOrDefaultAsync(brand => brand.Id == id);
     }
 
     public async Task AddAsync(Brand brand)

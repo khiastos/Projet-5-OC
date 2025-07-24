@@ -4,15 +4,7 @@
 }
 
 <div class="container text-center mt-5">
-    <h1 class="display-5 text-danger">Erreur</h1>
-    <p>Une erreur est survenue lors du traitement de votre demande.</p>
-
-    @if (Model?.ShowRequestId == true)
-    {
-        <p>
-            <strong>ID de la requête :</strong> <code>@Model.RequestId</code>
-        </p>
-    }
-
+    <h1 class="titre-h1 text-danger mb-4">Erreur</h1>
+    <h3 class="titre-h3-noir mb-3">Une erreur est survenue lors du traitement de votre demande.</h3>
     <a href="~/" class="btn-cta mt-3">Retour à l'accueil</a>
 </div>

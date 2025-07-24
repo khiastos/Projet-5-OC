@@ -5,9 +5,7 @@
 }
 
 <div class="form-CRUD-page">
-    <h1 class="form-CRUD-title">
-        Modifier : <strong>@Model.Brand?.Name @Model.Model?.Name</strong>
-    </h1>
+    <h1 class="titre-h1"> Modifier : <strong>@Model.Brand?.Name @Model.Model?.Name</strong></h1>
     <div class="form-CRUD">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="ID" />
@@ -21,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Year"></label>
-                <input asp-for="Year" class="form-control" />
+                <input asp-for="Year" class="form-control no-spin" />
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group form-check" style="margin-bottom: 13px;">
@@ -47,13 +45,13 @@
             </div>
             <div class="form-group">
                 <label for="imageFile">Changer l'image</label>
-                <input type="file" name="imageFile" class="form-control form-CRUD-file" />
+                <input type="file" name="imageFile" class="form-CRUD-upload-img" accept=".jpg,.jpeg,.png,.webp" />
             </div>
 
-            <button type="submit" class="btn-cta form-CRUD-btn" style="width:220px">Valider les changements</button>
+            <button type="submit" class="btn-cta" style="width:220px">Valider les changements</button>
         </form>
     </div>
-    <a asp-action="Index" class="form-CRUD-back">Retour</a>
+    <a asp-action="Index" style="color:black">Retour</a>
 </div>
 
 @section Scripts {

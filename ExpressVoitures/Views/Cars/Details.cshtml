@@ -12,17 +12,17 @@
             <img src="@Model.ImageUrl"
                  title="Photo de la @Model.Brand?.Name @Model.Model?.Name (@Model.Year)"
                  alt="Photo de la @Model.Brand?.Name @Model.Model?.Name (@Model.Year)"
-                 class="img-fluid fiche-voiture-img"
-                 style="border-radius: 16px; max-width: 70%; height: auto;" />
+                 class="photo"
+                 style="width:500px; height:300px" />
         </div>
         <div class="col-md-5 mt-5 mt-md-5">
             @if (User.IsInRole("Admin"))
             {
-                <p>Vous avez publié cette annonce, vous pouvez la :</p>
-                <a asp-action="Edit" asp-route-id="@Model.ID" style="margin-right: 40px; color:grey">Modifier</a>
-                <a asp-action="Delete" asp-route-id="@Model.ID" style="color:red">Supprimer</a>
+                <p class="body">Vous avez publié cette annonce, vous pouvez la :</p>
+                <a asp-action="Edit" asp-route-id="@Model.ID" class="body" style="margin-right: 40px; color:grey">Modifier</a>
+                <a asp-action="Delete" asp-route-id="@Model.ID" class="body" style="color:red">Supprimer</a>
             }
-            <div class="prixIndex" style="margin-bottom: 18px; margin-top: 30px; font-weight:700; font-size:xx-large">
+            <div class="prixIndex" style="margin-bottom: 18px; margin-top: 30px; font-size:2.7rem">
                     @Model.SellingPrice&nbsp;€
             </div>
             <div class="index">

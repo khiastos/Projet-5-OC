@@ -18,6 +18,10 @@ namespace Projet_5.Controllers
         public async Task<IActionResult> Index()
         {
             var brands = await _brandRepository.GetAllAsync();
+            if (brands is null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
             return View(brands);
         }
 
@@ -26,6 +30,10 @@ namespace Projet_5.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var brand = await _brandRepository.GetByIdAsync(id);
+
+            if (brand is null)
+                return RedirectToAction("Error", "Home");
+
             return View(brand);
         }
 
@@ -40,7 +48,7 @@ namespace Projet_5.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Name")] Brand brand)
+        public async Task<IActionResult> Create(Brand brand)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +64,7 @@ namespace Projet_5.Controllers
         {
             var brand = await _brandRepository.GetByIdAsync(id);
             if (brand is null)
-                return NotFound();
+                return RedirectToAction("Error", "Home");
 
             return View(brand);
         }
@@ -65,16 +73,16 @@ namespace Projet_5.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Brand brand)
+        public async Task<IActionResult> Edit(int id, Brand brand)
         {
             var brandInDb = await _brandRepository.GetByIdAsync(id);
             if (brandInDb is null || id != brand.Id)
-                return NotFound();
+                return RedirectToAction("Error", "Home");
 
             brandInDb.Name = brand.Name;
 
             await _brandRepository.UpdateAsync(brandInDb);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
 
@@ -85,7 +93,7 @@ namespace Projet_5.Controllers
             var brand = await _brandRepository.GetByIdAsync(id);
 
             if (brand is null)
-                return NotFound();
+                return RedirectToAction("Error", "Home");
 
             return View(brand);
         }
@@ -99,8 +107,11 @@ namespace Projet_5.Controllers
             var brand = await _brandRepository.GetByIdAsync(id);
             if (brand != null)
                 await _brandRepository.DeleteAsync(id);
+            else
+                return RedirectToAction("Error", "Home");
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
+
         }
     }
 }

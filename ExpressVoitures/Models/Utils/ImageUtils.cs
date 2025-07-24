@@ -1,6 +1,4 @@
-﻿using ExpressVoitures.Models.Entities;
-
-namespace Projet_5.Models.Utils
+﻿namespace Projet_5.Models.Utils
 {
     public static class ImageUtils
     {
@@ -32,7 +30,6 @@ namespace Projet_5.Models.Utils
                 setImageUrl(entity, $"/images/{imagesFolder}/{fileName}");
             }
         }
-
         public static async Task UpdateImageAsync<T>(
             T entity,
             IFormFile imageFile,

@@ -5,13 +5,12 @@
 }
 
 <div class="form-CRUD-page">
-    <h1 class="form-CRUD-title">Ajouter une voiture</h1>
-    <div class="form-CRUD-subtitle">Tous les champs sont obligatoires</div>
+    <h1 class="titre-h1">Ajouter une voiture</h1>
+    <h3 class="titre-h3-noir" style="font-size:1rem"> Tous les champs sont obligatoires</h3>
 
     <div class="form-CRUD">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
                 <label asp-for="SellingPrice"></label>
@@ -27,14 +26,13 @@
                 <label asp-for="BrandId"></label>
                 <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name"))" class="form-control"></select>
                 <span asp-validation-for="BrandId" class="text-danger"></span>
-                <a asp-controller="Brands" asp-action="Index" class="form-CRUD-back">Ajouter une marque</a>
-
+                <a asp-controller="Brands" asp-action="Index" style="color:black">Ajouter une marque</a>
             </div>
             <div class="form-group">
                 <label asp-for="ModelId"></label>
                 <select asp-for="ModelId" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name"))" class="form-control"></select>
                 <span asp-validation-for="ModelId" class="text-danger"></span>
-                <a asp-controller="Models" asp-action="Index" class="form-CRUD-back">Ajouter un modèle</a>
+                <a asp-controller="Models" asp-action="Index" style="color:black">Ajouter un modèle</a>
             </div>
             <div class="form-group">
                 <label asp-for="Finish"></label>
@@ -48,11 +46,10 @@
                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
                 </div>
             </div>
-
             <button type="submit" class="btn-cta form-CRUD-btn">Publier</button>
         </form>
     </div>
     <div>
-        <a asp-action="Index" class="form-CRUD-back">Retour</a>
+        <a asp-action="Index" style="color:black">Retour</a>
     </div>
 </div>

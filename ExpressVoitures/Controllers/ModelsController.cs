@@ -26,6 +26,9 @@ namespace Projet_5.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var model = await _modelRepository.GetByIdAsync(id);
+            if (model is null)
+                return RedirectToAction("Error", "Home");
+
             return View(model);
         }
 
@@ -40,12 +43,12 @@ namespace Projet_5.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Name")] Model model)
+        public async Task<IActionResult> Create(Model model)
         {
             if (ModelState.IsValid)
             {
                 await _modelRepository.AddAsync(model);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             return View(model);
         }
@@ -56,7 +59,7 @@ namespace Projet_5.Controllers
         {
             var model = await _modelRepository.GetByIdAsync(id);
             if (model is null)
-                return NotFound();
+                return RedirectToAction("Error", "Home");
 
             return View(model);
         }
@@ -65,16 +68,16 @@ namespace Projet_5.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Model model)
+        public async Task<IActionResult> Edit(int id, Model model)
         {
             var modelInDb = await _modelRepository.GetByIdAsync(id);
             if (modelInDb is null || id != model.Id)
-                return NotFound();
+                return RedirectToAction("Error", "Home");
 
             modelInDb.Name = model.Name;
 
             await _modelRepository.UpdateAsync(modelInDb);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
 
@@ -85,7 +88,7 @@ namespace Projet_5.Controllers
             var model = await _modelRepository.GetByIdAsync(id);
 
             if (model is null)
-                return NotFound();
+                return RedirectToAction("Error", "Home");
 
             return View(model);
         }
@@ -99,8 +102,10 @@ namespace Projet_5.Controllers
             var model = await _modelRepository.GetByIdAsync(id);
             if (model != null)
                 await _modelRepository.DeleteAsync(id);
+            else
+                return RedirectToAction("Error", "Home");
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
     }
 }

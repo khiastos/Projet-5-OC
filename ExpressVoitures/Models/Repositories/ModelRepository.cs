@@ -19,7 +19,7 @@ public class ModelRepository : IModelRepository
     public async Task<Model?> GetByIdAsync(int id)
     {
         return await _context.Model
-            .FirstOrDefaultAsync(c => c.Id == id);
+            .FirstOrDefaultAsync(model => model.Id == id);
     }
 
     public async Task AddAsync(Model model)

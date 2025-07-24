@@ -5,8 +5,8 @@
 }
 
 <div class="login-container">
-    <div class="logo mb-4 mt-5">
-        <a>Express Voitures</a>
+    <div class="logo mb-5 mt-5">
+        <h2 style="font-weight:800">Express Voitures</h2>
     </div>
     <form method="post">
         <div class="form-group mb-4">
@@ -24,7 +24,7 @@
             <input asp-for="Input.ConfirmPassword" class="form-control"/>
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
-        <div class="login-actions mb-4">
+        <div class="login-actions">
             <button type="submit" class="btn-cta">S'inscrire</button>
             <span class="ou">ou</span>
             <a asp-page="./Login" class="btn-cta">Se connecter</a>

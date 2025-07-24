@@ -11,7 +11,6 @@ namespace ExpressVoitures.Models.Entities
         [Required(ErrorMessage = "Le prix de vente est obligatoire")]
         [RegularExpression(@"^-?\d+([.,]\d{1,2})?$", ErrorMessage = "Le prix doit être un nombre valide avec jusqu'à deux décimales.")]
         [Range(0.01, int.MaxValue, ErrorMessage = "Le prix doit être supérieur à 0")]
-
         public double? SellingPrice { get; set; }
 
         [Display(Name = "Année")]
@@ -36,7 +35,7 @@ namespace ExpressVoitures.Models.Entities
         [Display(Name = "Modèle")]
         public int ModelId { get; set; }
 
-        [Display(Name = "Photo de la voiture")]
+        [Display(Name = "Visuel")]
         public string? ImageUrl { get; set; }
     }
 

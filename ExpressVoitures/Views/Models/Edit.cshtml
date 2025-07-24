@@ -4,13 +4,14 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center mt-5">Modifier le modèle</h1>
+<h1 class="titre-h1 text-center mt-4">Modifier le modèle</h1>
 <hr />
 <div class="d-flex justify-content-center mt-4">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />

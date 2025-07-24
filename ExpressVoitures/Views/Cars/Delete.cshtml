@@ -5,16 +5,15 @@
 }
 
 <div class="form-CRUD-page">
-	<h1 class="form-CRUD-title">Supprimer</h1>
+	<h1 class="titre-h1 mb-4">Supprimer</h1>
+	<h3 class="titre-h3-noir mb-4">Voulez-vous vraiment supprimer : <strong>@Model.Brand?.Name @Model.Model?.Name</strong> ?</h3>
 
-	<h3 class="mb-2" style="font-family: var(--body-font); color: var(--brunTexte); font-size: 1.2rem;">
-		Voulez-vous vraiment supprimer : <strong>@Model.Brand?.Name @Model.Model?.Name</strong> ?
-	</h3>
-
-	<div class="mb-3">
+	<div class="mb-5">
 		<img src="@Model.ImageUrl"
-			 alt="Photo"
-			 class="fiche-voiture-img-suppr" />
+			 title="Photo de la @Model.Brand?.Name @Model.Model?.Name (@Model.Year)"
+			 alt="Photo de la @Model.Brand?.Name @Model.Model?.Name (@Model.Year)"
+			 class="photo"
+			 style="width:500px; height:300px"/>
 	</div>
 
 	<div class="form-CRUD" style="margin-bottom:18px;">
@@ -29,8 +28,8 @@
 
 		<form asp-action="Delete" style="margin-top:22px;">
 			<input type="hidden" asp-for="ID" />
-			<button type="submit" class="btn-cta form-CRUD-btn btn-suppr" style="width:200px">Confirmer la suppression</button>
-			<a asp-action="Index" class="form-CRUD-back" style="margin-left:22px;">Retour</a>
+			<button type="submit" class="btn-suppr" style="width:200px">Confirmer la suppression</button>
+			<a asp-action="Index" style="margin-left:22px; color:black">Retour</a>
 		</form>
 	</div>
 </div>

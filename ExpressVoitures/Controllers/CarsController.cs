@@ -31,9 +31,8 @@ namespace Projet_5.Controllers
         {
             var car = await _carRepository.GetByIdAsync(id);
             if (car is null)
-            {
                 return RedirectToAction("Error", "Home");
-            }
+
             return View(car);
         }
 
@@ -49,22 +48,21 @@ namespace Projet_5.Controllers
 
         // POST: Cars/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(Car car, IFormFile imageFile)
         {
 
             /* Gestion du message d'erreur pour l'image ici car c'est ici que IFormFile est accessible, comparé à dans l'entité Car qui ne reçoit pas
              directement le fichier depuis la vue, ou alors c'est faisable en rajoutant un IFormFile dans l'entité car */
-
-            if (imageFile == null || imageFile.Length == 0)
-            {
+            if (imageFile is null || imageFile.Length == 0)
                 ModelState.AddModelError("ImageUrl", "La photo est obligatoire");
-            }
             else
             {
                 // Vérification de l'image, pour contrôler ce qui peut être ajouté ou non au site (protection contre les attaques/script XXS)
                 string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".webp" };
                 var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
+
                 if (!allowedExtensions.Contains(extension))
                 {
                     ModelState.AddModelError("ImageUrl", "Seuls les fichiers image (jpg, jpeg, png, webp) sont autorisés.");
@@ -73,13 +71,14 @@ namespace Projet_5.Controllers
 
             if (ModelState.IsValid)
             {
-                await ImageUtils.AddAnImageAsync(car, imageFile, ImageFolder, (c, url) => c.ImageUrl = url);
+                // Lambda qui assigne à car.ImageUrl l’URL retournée une fois l’image enregistrée
+                await ImageUtils.AddAnImageAsync(car, imageFile, ImageFolder, (car, url) => car.ImageUrl = url);
                 await _carRepository.AddAsync(car);
                 return RedirectToAction("CreateValidated");
             }
-
             ViewBag.Brands = await _brandRepository.GetAllAsync();
             ViewBag.Models = await _modelRepository.GetAllAsync();
+
             return View(car);
         }
 
@@ -96,7 +95,7 @@ namespace Projet_5.Controllers
             var car = await _carRepository.GetByIdAsync(id);
 
             if (car == null)
-                return NotFound();
+                return RedirectToAction("Error", "Home");
 
             // Récup les marques et modèles pour le dropdown de la view
             ViewBag.Brands = await _brandRepository.GetAllAsync();
@@ -111,10 +110,8 @@ namespace Projet_5.Controllers
         public async Task<IActionResult> Edit(int id, Car car, IFormFile imageFile)
         {
             var carInDb = await _carRepository.GetByIdAsync(id);
-            if (carInDb == null || id != car.ID)
-            {
+            if (carInDb is null || id != car.ID)
                 return RedirectToAction("Error", "Home");
-            }
 
             // Mise à jour des champs hors image
             carInDb.SellingPrice = car.SellingPrice;
@@ -138,10 +135,10 @@ namespace Projet_5.Controllers
             }
 
             // Update l'image si valide
-            await ImageUtils.UpdateImageAsync(carInDb, imageFile, ImageFolder, c => c.ImageUrl, (c, url) => c.ImageUrl = url);
+            await ImageUtils.UpdateImageAsync(carInDb, imageFile, ImageFolder, car => car.ImageUrl, (car, url) => car.ImageUrl = url);
 
             await _carRepository.UpdateAsync(carInDb);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         // GET: Cars/Delete/5
@@ -151,9 +148,7 @@ namespace Projet_5.Controllers
             var car = await _carRepository.GetByIdAsync(id);
 
             if (car is null)
-            {
                 return RedirectToAction("Error", "Home");
-            }
 
             return View(car);
         }
@@ -174,9 +169,7 @@ namespace Projet_5.Controllers
                 await _carRepository.DeleteAsync(id);
             }
             else
-            {
                 return RedirectToAction("Error", "Home");
-            }
 
             return RedirectToAction("DeleteValidated");
         }
