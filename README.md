@@ -29,7 +29,7 @@ Le but ici était de créer un **premier projet d'application web** avec des **d
 ## Le front-end
 
 - **Découpage de la maquette** fournie sur **Figma**
-- **Utilisation d'un design system** pour les patterns répétés (bouton CTA, titres, logo,...)
+- **Utilisation d'un design system** pour les patterns répétés (bouton, titres, logo,...)
 - **Utilisation de Bootstrap**
 
 ---
@@ -37,13 +37,21 @@ Le but ici était de créer un **premier projet d'application web** avec des **d
 
 1. `git clone https://github.com/khiastos/Projet-5-OC.git`  
 2. Ouvrir la solution dans Visual Studio  
-3. Modifier la chaîne de connexion dans `appsettings.json` (pour afficher les voitures déjà existantes dans la BDD)
-4. Lancer `Update-Database` dans la Console du Gestionnaire de Package  
+3. Modifier la chaîne de connexion dans `appsettings.json` en mettant celle de votre base en local 
+4. Lancer `Update-Database` dans la Console du Gestionnaire de Package
 5. Exécuter le projet
+
+Si besoin, vous pouvez supprimer les migrations déjà existantes pour éviter les potentiels conflits, il faudra cependant exécuter `Add-Migration (+ Nom de votre choix)` pour créer une nouvelle migration, puis effectuer `Update-Database`.
 
 ---
 ## Connexion en admin
 
 - L'adresse mail du compte admin est dans `appsettings.json` : `admin@gmail.com`
-- Le mot de passe est : Password123!
+- Vous devrez vous créer un compte avec cette adresse mail et le mot de passe de votre choix, relancer l'application afin que le rôle admin soit bien attribué à ce compte et vous n'avez plus qu'à vous reconnecter pour pouvoir ajouter des voitures, les modifier, les supprimer,...
 
+---
+## À noter
+
+Si vous utilisez Brave comme moteur de recherche, l'application s'arrêtera dès que vous ajouterez une image lors de la création d'une voiture, c'est dû à un problème de sécurité que Brave possède (lié à la politique de sécurité des cookies en HTTPS) et qui bloque l'ajout de fichier sur le site.
+
+Je vous conseille de passer sur Chrome, qui est plus permissif en local que Brave, afin de profiter pleinement des fonctionnalités du site.
