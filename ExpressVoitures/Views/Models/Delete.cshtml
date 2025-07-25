@@ -1,0 +1,23 @@
+﻿@model Projet_5.Models.Entities.Model
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h1 class="titre-h1 text-center mt-4">Supprimer le modèle</h1>
+<hr />
+<div class="text-center mt-5">
+
+    <h3 class="titre-h3-noir mb-4">
+        Voulez-vous vraiment supprimer : <strong>@Model.Name</strong> ?
+    </h3>
+
+    <div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Supprimer" class="btn-suppr" style="width:100px" />
+        </form>
+        <div class="text-center mt-3">
+            <a asp-action="Index" style="color:black;">Retour</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@model ExpressVoitures.Models.Entities.Car
+
+@{
+	ViewData["Title"] = "Supprimer";
+}
+
+<div class="form-CRUD-page">
+	<h1 class="titre-h1 mb-4">Supprimer</h1>
+	<h3 class="titre-h3-noir mb-4">Voulez-vous vraiment supprimer : <strong>@Model.Brand?.Name @Model.Model?.Name</strong> ?</h3>
+
+	<div class="mb-5">
+		<img src="@Model.ImageUrl"
+			 title="Photo de la @Model.Brand?.Name @Model.Model?.Name (@Model.Year)"
+			 alt="Photo de la @Model.Brand?.Name @Model.Model?.Name (@Model.Year)"
+			 class="photo"
+			 style="width:500px; height:300px"/>
+	</div>
+
+	<div class="form-CRUD" style="margin-bottom:18px;">
+		<div class="fiche-info-suppr" style="text-align:left;">
+			<div><span class="index">Prix de vente :</span> <span>@Model.SellingPrice €</span></div>
+			<div><span class="index">Année :</span> <span>@Model.Year</span></div>
+			<div><span class="index">Disponibilité :</span> <span>@(Model.IsAvailable ? "Disponible" : "Vendue")</span></div>
+			<div><span class="index">Marque :</span> <span>@Model.Brand?.Name</span></div>
+			<div><span class="index">Modèle :</span> <span>@Model.Model?.Name</span></div>
+			<div><span class="index">Finition :</span> <span>@Model.Finish</span></div>
+		</div>
+
+		<form asp-action="Delete" style="margin-top:22px;">
+			<input type="hidden" asp-for="ID" />
+			<button type="submit" class="btn-suppr" style="width:200px">Confirmer la suppression</button>
+			<a asp-action="Index" style="margin-left:22px; color:black">Retour</a>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ExpressVoitures.Models.Entities.Car>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="titre-h1 text-center">Nos voitures</h1>
+<p class="text-center mb-5">
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create" class="btn-cta mb-3">+ Ajouter une voiture</a>
+    }
+</p>
+<div class="container">
+    <div class="row gx-5 gy-5" style="max-width: 1100px; margin: inherit">
+        @foreach (var item in Model)
+        {
+            <article class="col-6">
+                <div class="d-flex flex-row ms-5" style="border-radius: 18px;">
+                    <div>
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <a asp-action="Details" asp-route-id="@item.ID">
+                                <img src="@item.ImageUrl"
+                                     class="photo"
+                                     title="Photo de la @item.Brand?.Name @item.Model?.Name (@item.Year)"
+                                     alt="Photo de la @item.Brand?.Name @item.Model?.Name (@item.Year)" />
+                            </a>
+                        }
+                    </div>
+                    <div class="ms-4">
+                        <div class="prixIndex">@item.SellingPrice €</div>
+                        <div class="index">Année : @item.Year</div>
+                        <div class="index">Marque : @item.Brand?.Name</div>
+                        <div class="index">Modèle : @item.Model?.Name</div>
+                        <div class="index">Finition : @item.Finish</div>
+                        <div>
+                            @if (item.IsAvailable)
+                            {
+                                <span class="badge bg-success">Disponible</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Vendue</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</div>

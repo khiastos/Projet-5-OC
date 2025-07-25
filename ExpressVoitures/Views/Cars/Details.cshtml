@@ -1,0 +1,47 @@
+﻿@model ExpressVoitures.Models.Entities.Car
+
+@{
+    ViewData["Title"] = "Détails";
+}
+
+<a asp-action="Index" class="retour-link mb-4 d-inline-block text-black text-decoration-none mt-5">&larr; Retour</a>
+
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-7 text-center text-md-start">
+            <img src="@Model.ImageUrl"
+                 title="Photo de la @Model.Brand?.Name @Model.Model?.Name (@Model.Year)"
+                 alt="Photo de la @Model.Brand?.Name @Model.Model?.Name (@Model.Year)"
+                 class="photo"
+                 style="width:500px; height:300px" />
+        </div>
+        <div class="col-md-5 mt-5 mt-md-5">
+            @if (User.IsInRole("Admin"))
+            {
+                <p class="body">Vous avez publié cette annonce, vous pouvez la :</p>
+                <a asp-action="Edit" asp-route-id="@Model.ID" class="body" style="margin-right: 40px; color:grey">Modifier</a>
+                <a asp-action="Delete" asp-route-id="@Model.ID" class="body" style="color:red">Supprimer</a>
+            }
+            <div class="prixIndex" style="margin-bottom: 18px; margin-top: 30px; font-size:2.7rem">
+                    @Model.SellingPrice&nbsp;€
+            </div>
+            <div class="index">
+                <div style="margin-bottom: 18px;">Année : <span>@Model.Year</span></div>
+                <div style="margin-bottom: 18px;">Marque : <span>@Model.Brand?.Name</span></div>
+                <div style="margin-bottom: 18px;">Modèle : <span>@Model.Model?.Name</span></div>
+                <div style="margin-bottom: 18px;">Finition : <span>@Model.Finish</span></div>
+            </div>
+
+            <div class="mb-4">
+                @if (@Model.IsAvailable)
+                {
+                    <span class="badge bg-success">Disponible</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Vendue</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>

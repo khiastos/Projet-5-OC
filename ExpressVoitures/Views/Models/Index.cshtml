@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Projet_5.Models.Entities.Model>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="titre-h1 text-center mt-4">Les modèles</h1>
+<p class="text-center">
+    <a asp-action="Create" class="btn-cta">+ Ajouter un nouveau modèle</a>
+</p>
+
+<a asp-action="Create" asp-controller="Cars" class="retour-link mb-4 d-inline-block text-black text-decoration-none mt-2">
+    &larr; Retour
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" style="color:black">Modifier</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" style="color:black">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,34 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "S'inscrire";
+}
+
+<div class="login-container">
+    <div class="logo mb-5 mt-5">
+        <h2 style="font-weight:800">Express Voitures</h2>
+    </div>
+    <form method="post">
+        <div class="form-group mb-4">
+            <label asp-for="Input.Email">Adresse email</label>
+            <input asp-for="Input.Email" class="form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-4">
+            <label asp-for="Input.Password">Mot de passe</label>
+            <input asp-for="Input.Password" class="form-control" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-4">
+            <label asp-for="Input.ConfirmPassword">Confirmez le mot de passe</label>
+            <input asp-for="Input.ConfirmPassword" class="form-control"/>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="login-actions">
+            <button type="submit" class="btn-cta">S'inscrire</button>
+            <span class="ou">ou</span>
+            <a asp-page="./Login" class="btn-cta">Se connecter</a>
+        </div>
+    </form>
+</div>
+

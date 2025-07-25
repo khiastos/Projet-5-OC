@@ -1,0 +1,55 @@
+﻿@model ExpressVoitures.Models.Entities.Car
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="form-CRUD-page">
+    <h1 class="titre-h1">Ajouter une voiture</h1>
+    <h3 class="titre-h3-noir" style="font-size:1rem"> Tous les champs sont obligatoires</h3>
+
+    <div class="form-CRUD">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label asp-for="SellingPrice"></label>
+                <input asp-for="SellingPrice" class="form-control" />
+                <span asp-validation-for="SellingPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year"></label>
+                <input asp-for="Year" class="form-control no-spin" type="number" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BrandId"></label>
+                <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name"))" class="form-control"></select>
+                <span asp-validation-for="BrandId" class="text-danger"></span>
+                <a asp-controller="Brands" asp-action="Index" style="color:black">Ajouter une marque</a>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModelId"></label>
+                <select asp-for="ModelId" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name"))" class="form-control"></select>
+                <span asp-validation-for="ModelId" class="text-danger"></span>
+                <a asp-controller="Models" asp-action="Index" style="color:black">Ajouter un modèle</a>
+            </div>
+            <div class="form-group">
+                <label asp-for="Finish"></label>
+                <input asp-for="Finish" class="form-control" />
+                <span asp-validation-for="Finish" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <div class="form-CRUD-upload">
+                    <input type="file" name="imageFile" class="form-control form-CRUD-file" accept= ".jpg,.jpeg,.png,.webp" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn-cta form-CRUD-btn">Publier</button>
+        </form>
+    </div>
+    <div>
+        <a asp-action="Index" style="color:black">Retour</a>
+    </div>
+</div>

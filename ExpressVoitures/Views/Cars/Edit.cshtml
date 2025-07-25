@@ -1,0 +1,61 @@
+﻿@model ExpressVoitures.Models.Entities.Car
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="form-CRUD-page">
+    <h1 class="titre-h1"> Modifier : <strong>@Model.Brand?.Name @Model.Model?.Name</strong></h1>
+    <div class="form-CRUD">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="ID" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="SellingPrice"></label>
+                <input asp-for="SellingPrice" class="form-control" />
+                <span asp-validation-for="SellingPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year"></label>
+                <input asp-for="Year" class="form-control no-spin" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check" style="margin-bottom: 13px;">
+                <label class="form-check-label" style="font-family: var(--body-font); font-size: 0.97rem;">
+                    <input class="form-check-input" asp-for="IsAvailable" style="margin-right: 7px;" />
+                    @Html.DisplayNameFor(model => model.IsAvailable)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Finish"></label>
+                <input asp-for="Finish" class="form-control" />
+                <span asp-validation-for="Finish" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BrandId"></label>
+                <select asp-for="BrandId" asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name", Model.BrandId))" class="form-control"></select>
+                <span asp-validation-for="BrandId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModelId"></label>
+                <select asp-for="ModelId" asp-items="@(new SelectList(ViewBag.Models, "Id", "Name", Model.ModelId))" class="form-control"></select>
+                <span asp-validation-for="ModelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="imageFile">Changer l'image</label>
+                <input type="file" name="imageFile" class="form-CRUD-upload-img" accept=".jpg,.jpeg,.png,.webp" />
+            </div>
+
+            <button type="submit" class="btn-cta" style="width:220px">Valider les changements</button>
+        </form>
+    </div>
+    <a asp-action="Index" style="color:black">Retour</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,15 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Accès refusé";
+}
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="text-center p-4 border rounded" style="max-width: 600px;">
+        <h1>@ViewData["Title"]</h1>
+        <p>Cette page n'est accessible qu'aux membres autorisés.</p>
+        <a asp-action="Index" asp-controller="Cars" class="btn-cta">
+            &larr; Retour à l'accueil
+        </a>
+    </div>
+</div>
